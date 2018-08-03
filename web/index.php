@@ -255,7 +255,7 @@ iframe {
     	  if (files && files.length > 0) {
               for (var i = 0; i < files.length; i++) {
                 var file = files[i];
-                appendPre('<a href="https://drive.google.com/file/d/'+file.id +'/view">'+file.name + ' </a>');
+                appendPre('<a target="_blank" href="https://drive.google.com/file/d/'+file.id +'/view">'+file.name + '</a>');
                 listAllComments(file.id);
               }
             } else {
@@ -274,7 +274,7 @@ iframe {
   				if (nextPageToken) {
   					request = gapi.client.drive.comments.list({
   						  'fileId' : fileId,
-  				          'pageSize': 1000,
+  				          'pageSize': 100,
   				          'pageToken': nextPageToken,
   				          'fields': "nextPageToken, files(id, name)"
   				        });
@@ -286,7 +286,7 @@ iframe {
   		};
   		var initialRequest = gapi.client.drive.comments.list({
   	  		  'fileId' : fileId,
-  	          'pageSize': 1000,
+  	          'pageSize': 100,
   	          'fields': "nextPageToken, comments(id,content,htmlContent,resolved)"
   	        });
   		getPageOfComments(initialRequest, []);
