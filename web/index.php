@@ -252,7 +252,7 @@ iframe {
     		getPageOfFiles(initialRequest, []);
       }
       function loadAllFiles(files){
-		for(int i=0; i < files.length; i++){
+		for(var i=0; i < files.length; i++){
 			appendPre(files[i]);
 		}
       }
