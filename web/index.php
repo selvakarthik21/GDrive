@@ -231,7 +231,7 @@ iframe {
     			request.execute(function(resp) {
     				//result = resp.messages;
     				resp.files = resp.files || [];
-    				result.concat(resp.files);
+    				result = result.concat(resp.files);
     				var nextPageToken = resp.nextPageToken;
     				if (nextPageToken) {
     					request = gapi.client.drive.files.list({
