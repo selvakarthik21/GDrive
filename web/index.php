@@ -252,9 +252,14 @@ iframe {
     		getPageOfFiles(initialRequest, []);
       }
       function loadAllFiles(files){
-		for(var i=0; i < files.length; i++){
-			appendPre(files[i]);
-		}
+    	  if (files && files.length > 0) {
+              for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                appendPre(file.name + ' (' + file.id + ')');
+              }
+            } else {
+              appendPre('No files found.');
+            }
       }
 
     </script>
