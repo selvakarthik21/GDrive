@@ -255,13 +255,45 @@ iframe {
     	  if (files && files.length > 0) {
               for (var i = 0; i < files.length; i++) {
                 var file = files[i];
-                appendPre(file.name + ' (' + file.id + ')');
+                appendPre('<a href="https://drive.google.com/file/d/'+file.id +'/view">'+file.name + ' </a>');
+                listAllComments(file.id);
               }
             } else {
               appendPre('No files found.');
             }
+          
       }
-
+	function listAllComments(fileId){
+		var callback = loadAllComments;
+  	  var getPageOfComments = function(request, result) {
+  			request.execute(function(resp) {
+  				//result = resp.messages;
+  				resp.comments = resp.comments || [];
+  				result = result.concat(resp.comments);
+  				var nextPageToken = resp.nextPageToken;
+  				if (nextPageToken) {
+  					request = gapi.client.drive.comments.list({
+  						  'fileId' : fileId,
+  				          'pageSize': 1000,
+  				          'pageToken': nextPageToken,
+  				          'fields': "nextPageToken, files(id, name)"
+  				        });
+  					getPageOfFiles(request, result);
+  				} else {
+  					callback(result);
+  				}
+  			});
+  		};
+  		var initialRequest = gapi.client.drive.comments.list({
+  	  		  'fileId' : fileId,
+  	          'pageSize': 1000,
+  	          'fields': "nextPageToken, comments(id,content,htmlContent,resolved)"
+  	        });
+  		getPageOfComments(initialRequest, []);
+	}
+	function loadAllComments(data){
+		console.log(data);
+	}
     </script>
 
     <script async defer src="https://apis.google.com/js/api.js"
