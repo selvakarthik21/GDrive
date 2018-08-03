@@ -141,7 +141,7 @@ iframe {
     <script type="text/javascript">
       // Client ID and API key from the Developer Console
       var CLIENT_ID = '453486582246-qr4dr1lbclp9149pead96tbtetuvcduj.apps.googleusercontent.com';
-      var API_KEY = 'sMbzHoT3dzZGBk_ZJaOA-ClH';
+      var API_KEY = 'AIzaSyBPUJKB5QecgWwtdU4CmX9SrDnXpf0V3w8';
 
       // Array of API discovery doc URLs for APIs used by the quickstart
       var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
