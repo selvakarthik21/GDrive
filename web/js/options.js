@@ -49,12 +49,12 @@ function updateSigninStatus(isSignedIn) {
 		loggedInUser = "+"+gapi.auth2.getAuthInstance().currentUser.Ab.w3.U3 ;
 		$(authorizeButton).addClass('hidden');
 		$(signoutButton).removeClass('hidden');
-		$('.table-inbox').removeClass("hidden").empty();
+		$('.table-inbox').removeClass("hidden");
 		listFiles();
 	} else {
 		$(signoutButton).addClass('hidden');
 		$(authorizeButton).removeClass('hidden');
-		$('.table-inbox').addClass("hidden").empty();
+		$('.table-inbox').addClass("hidden");
 	}
 }
 
@@ -162,6 +162,7 @@ function sendMessage(messageId, message, callback)
  * Print files.
  */
 function listFiles() {
+	$('.table-inbox tbody').empty();
 	var callback = loadAllFiles;
 	var modifiedAfter = (new Date(new Date()-daysDiff)).toISOString().split(".")[0]
 	var getPageOfFiles = function(request, result) {
