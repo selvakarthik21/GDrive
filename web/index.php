@@ -170,7 +170,7 @@ iframe {
           clientId: CLIENT_ID,
           discoveryDocs: DISCOVERY_DOCS,
           scope: SCOPES
-        }).then(function (response) {
+        }).then(function () {
           // Listen for sign-in state changes.
           gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
@@ -189,13 +189,14 @@ iframe {
         if (isSignedIn) {
            loggedInUser = "+"+gapi.auth2.getAuthInstance().currentUser.Ab.w3.U3 ;
           authorizeButton.style.display = 'none';
-          signoutButton.style.display = 'block';          
+          signoutButton.style.display = 'block';
+          listFiles();
         } else {
           authorizeButton.style.display = 'block';
           signoutButton.style.display = 'none';
         }
       }
-		
+
       /**
        *  Sign in the user upon button click.
        */
