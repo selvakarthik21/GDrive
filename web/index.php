@@ -148,7 +148,7 @@ iframe {
 	  var loggedInUser;
       // Authorization scopes required by the API; multiple scopes can be
       // included, separated by spaces.
-      var SCOPES = 'https://www.googleapis.com/auth/drive';
+      var SCOPES = 'https://www.googleapis.com/auth/drive profile email';
 
       var authorizeButton = document.getElementById('authorize_button');
       var signoutButton = document.getElementById('signout_button');
@@ -170,7 +170,7 @@ iframe {
           clientId: CLIENT_ID,
           discoveryDocs: DISCOVERY_DOCS,
           scope: SCOPES
-        }).then(function () {
+        }).then(function (response) {
           // Listen for sign-in state changes.
           gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
@@ -187,15 +187,15 @@ iframe {
        */
       function updateSigninStatus(isSignedIn) {
         if (isSignedIn) {
+           loggedInUser = "+"+gapi.auth2.getAuthInstance().currentUser.Ab.w3.U3 ;
           authorizeButton.style.display = 'none';
-          signoutButton.style.display = 'block';
-          listFiles();
+          signoutButton.style.display = 'block';          
         } else {
           authorizeButton.style.display = 'block';
           signoutButton.style.display = 'none';
         }
       }
-
+		
       /**
        *  Sign in the user upon button click.
        */
