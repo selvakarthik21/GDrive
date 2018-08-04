@@ -98,16 +98,18 @@ function appendPre(file, comment) {
 				<button data-dismiss="modal" data-toggle="modal" data-target="#reply-modal" \
 					id="'+comment.id+'" class="btn btn-primary" onclick="fillInReply(\''+file.name+'\',\''+ comment.content +'\',this.id,\''+file.id+'\')">\
 				Reply</button>\
-			<button id="'+comment.id+'"  class="btn btn-primary" onclick="markAsResolved(this.id,\''+file.id+'\')"> Mark As Resolved</button>\
+			<button id="'+comment.id+'"  class="btn btn-primary" onclick="markAsResolved(this.id,\''+file.id+'\',\''+ comment.content +'\')"> Mark As Resolved</button>\
 			</td>\
 			</tr>'
 	);
 }
-function markAsResolved(commentId, fileId){
+function markAsResolved(commentId, fileId, content){
+	content = content.replace('+karthik21', loggedInUser);
 	var sendRequest = gapi.client.drive.comments.create({
 		'fileId' : fileId,
 		'commentId': commentId,
-		'resolved': true
+		'resolved': true,
+		'content' : content
 	});
 	sendRequest.execute(function(response){
 		console.log(response);
@@ -147,7 +149,7 @@ function fillInReply(to, subject, message_id, fileId)
 	$('#reply-message-id').attr('fileId', fileId);
 }
 
-function sendMessage(messageId, message, callback)
+function sendMessage(fileId, messageId, message, callback)
 {
 
 	var sendRequest = gapi.client.drive.comments.create({
