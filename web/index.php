@@ -248,7 +248,7 @@ iframe {
     			});
     		};
     		var initialRequest = gapi.client.drive.files.list({
-        		  'q' : 'modifiedTime >'+modifiedAfter,
+        		  'q' : 'modifiedTime > \''+modifiedAfter+'\'',
     	          'pageSize': 1000,
     	          'fields': "nextPageToken, files(id, name)"
     	        });
@@ -303,8 +303,6 @@ iframe {
               var hrefMessage = href+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+file.htmlContent;
               appendPre(hrefMessage);
             }
-          } else {
-            appendPre('No files found.');
           }
 	}
 	function sleep(milliseconds) {
