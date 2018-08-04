@@ -4,10 +4,8 @@
 <title>Gmail API demo</title>
 <meta charset="UTF-8">
 
-<link rel="stylesheet"
-	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap-theme.min.css">
 <style>
 iframe {
 	width: 100%;
@@ -15,6 +13,12 @@ iframe {
 	min-height: 80%;
 	height: 600px;
 	display: flex;
+}
+table.sortable thead {
+    background-color:#eee;
+    color:#666666;
+    font-weight: bold;
+    cursor: default;
 }
 </style>
 </head>
@@ -26,14 +30,15 @@ iframe {
 			class="btn btn-primary pull-right hidden">Compose</a>
 
 		<button id="authorize_button" class="btn btn-primary hidden">Authorize</button>
-		<button id="signout_button"  class="btn btn-primary hidden">Sign Out</button>
-		
-		<table class="table table-striped table-inbox hidden">
+		<button id="signout_button" class="btn btn-primary hidden">Sign Out</button>
+
+		<table class="table table-striped table-inbox hidden sortable">
 			<thead>
 				<tr>
-					<th>Document</th>
-					<th>Action Item Message</th>
-					<th></th>
+					<th style="width: 10%;">Document</th>
+					<th style="width: 10%;">Created At</th>
+					<th style="width: 60%">Action Item Message</th>
+					<th style="width: 20%"></th>
 				</tr>
 			</thead>
 			<tbody></tbody>
@@ -113,9 +118,8 @@ iframe {
 		</div>
 	</div>
 
-	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-	<script
-		src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="js/jquery-2.2.4.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 
 	<script src="js/options.js"></script>
 	<script async defer src="https://apis.google.com/js/api.js"
