@@ -104,13 +104,12 @@ function appendPre(file, comment) {
 	);
 }
 function markAsResolved(commentId, fileId, content){
-	content = content.replace('+karthik21', loggedInUser);
-	var sendRequest = gapi.client.drive.comments.update({
+	var sendRequest = gapi.client.drive.replies.create({
 		'fileId' : fileId,
-		'commentId': commentId,
-		'resolved': true,
-		'fields': 'content,resolved',
-		'content' : content
+		'commentId': messageId,
+		'fields': 'content, resolved',
+		'action' : 'resolve',
+		'content': 'resolved by '+loggedInUser
 	});
 	sendRequest.execute(function(response){
 		console.log(response);
@@ -133,8 +132,9 @@ function sendReply()
 	return false;
 }
 
-function replyTidy()
+function replyTidy(response)
 {
+	console.log('reply response ' + response);
 	$('#reply-modal').modal('hide');
 
 	$('#reply-message').val('');
@@ -156,6 +156,7 @@ function sendMessage(fileId, messageId, message, callback)
 	var sendRequest = gapi.client.drive.replies.create({
 		'fileId' : fileId,
 		'commentId': messageId,
+		'fields': 'content,resolved',
 		'content': message
 	});
 
