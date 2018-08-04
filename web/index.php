@@ -36,8 +36,8 @@ table.sortable{
 				<tr>
 					<th style="width: 10%;">Document</th>
 					<th style="width: 10%;">Created At</th>
-					<th style="width: 60%">Action Item Message</th>
-					<th style="width: 20%"></th>
+					<th style="width: 57%">Action Item Message</th>
+					<th style="width: 23%"></th>
 				</tr>
 			</thead>
 			<tbody></tbody>
