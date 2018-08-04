@@ -1,4 +1,4 @@
-<?php /*
+<?php 
 <!doctype html>
 <html>
 <head>
@@ -21,19 +21,20 @@ iframe {
 </head>
 <body>
 	<div class="container">
-		<h1>Gmail API demo</h1>
+		<h1>GDrive List Action Items</h1>
 
 		<a href="#compose-modal" data-toggle="modal" id="compose-button"
 			class="btn btn-primary pull-right hidden">Compose</a>
 
-		<button id="authorize-button" class="btn btn-primary hidden">Authorize</button>
-
+		<button id="authorize_button" class="btn btn-primary hidden">Authorize</button>
+		<button id="signout_button"  class="btn btn-primary hidden">Sign Out</button>
+		
 		<table class="table table-striped table-inbox hidden">
 			<thead>
 				<tr>
-					<th>From</th>
-					<th>Subject</th>
-					<th>Date/Time</th>
+					<th>Document</th>
+					<th>Action Item Message</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody></tbody>
@@ -118,11 +119,14 @@ iframe {
 		src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 	<script src="js/options.js"></script>
-	<script
-		src="https://apis.google.com/js/api.js?onload=handleClientLoad"></script>
+	<script async defer src="https://apis.google.com/js/api.js"
+		onload="this.onload=function(){};handleClientLoad()"
+		onreadystatechange="if (this.readyState === 'complete') this.onload()">
+	</script>
 </body>
-</html>*/
+</html>
 ?>
+<?php ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -139,193 +143,7 @@ iframe {
     <pre id="content"></pre>
 
     <script type="text/javascript">
-      // Client ID and API key from the Developer Console
-      var CLIENT_ID = '453486582246-qr4dr1lbclp9149pead96tbtetuvcduj.apps.googleusercontent.com';
-      var API_KEY = 'AIzaSyBPUJKB5QecgWwtdU4CmX9SrDnXpf0V3w8';
-      var daysDiff = 7*24*60*60*1000;
-      // Array of API discovery doc URLs for APIs used by the quickstart
-      var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
-	  var loggedInUser;
-      // Authorization scopes required by the API; multiple scopes can be
-      // included, separated by spaces.
-      var SCOPES = 'https://www.googleapis.com/auth/drive profile email';
-
-      var authorizeButton = document.getElementById('authorize_button');
-      var signoutButton = document.getElementById('signout_button');
-
-      /**
-       *  On load, called to load the auth2 library and API client library.
-       */
-      function handleClientLoad() {
-        gapi.load('client:auth2', initClient);
-      }
-
-      /**
-       *  Initializes the API client library and sets up sign-in state
-       *  listeners.
-       */
-      function initClient() {
-        gapi.client.init({
-          apiKey: API_KEY,
-          clientId: CLIENT_ID,
-          discoveryDocs: DISCOVERY_DOCS,
-          scope: SCOPES
-        }).then(function () {
-          // Listen for sign-in state changes.
-          gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
-          // Handle the initial sign-in state.
-          updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-          authorizeButton.onclick = handleAuthClick;
-          signoutButton.onclick = handleSignoutClick;
-        });
-      }
-
-      /**
-       *  Called when the signed in status changes, to update the UI
-       *  appropriately. After a sign-in, the API is called.
-       */
-      function updateSigninStatus(isSignedIn) {
-        if (isSignedIn) {
-           loggedInUser = "+"+gapi.auth2.getAuthInstance().currentUser.Ab.w3.U3 ;
-          authorizeButton.style.display = 'none';
-          signoutButton.style.display = 'block';
-          listFiles();
-        } else {
-          authorizeButton.style.display = 'block';
-          signoutButton.style.display = 'none';
-        }
-      }
-
-      /**
-       *  Sign in the user upon button click.
-       */
-      function handleAuthClick(event) {
-        gapi.auth2.getAuthInstance().signIn({
-        	  scope: 'profile email'
-        }).then(function(response){
-            try{
-        		loggedInUser = "+"+response.w3.U3 ;
-            } catch(e){
-            	console.log('error', e );
-            }
-        	
-        });
-      }
-
-      /**
-       *  Sign out the user upon button click.
-       */
-      function handleSignoutClick(event) {
-        gapi.auth2.getAuthInstance().signOut();
-      }
-
-      /**
-       * Append a pre element to the body containing the given message
-       * as its text node. Used to display the results of the API call.
-       *
-       * @param {string} message Text to be placed in pre element.
-       */
-      function appendPre(message) {
-        var target = document.getElementById('content');
-        target.insertAdjacentHTML( 'beforeend', message + '\n' );
-        
-      }
-
-      /**
-       * Print files.
-       */
-      function listFiles() {
-          var callback = loadAllFiles;
-          var modifiedAfter = (new Date(new Date()-daysDiff)).toISOString().split(".")[0]
-    	  var getPageOfFiles = function(request, result) {
-    			request.execute(function(resp) {
-    				//result = resp.messages;
-    				resp.files = resp.files || [];
-    				result = result.concat(resp.files);
-    				var nextPageToken = resp.nextPageToken;
-    				if (nextPageToken) {
-    					request = gapi.client.drive.files.list({
-    						  'q' : 'modifiedTime >'+modifiedAfter,
-    				          'pageSize': 1000,
-    				          'pageToken': nextPageToken,
-    				          'fields': "nextPageToken, files(id, name)"
-    				        });
-    					getPageOfFiles(request, result);
-    				} else {
-    					callback(result);
-    				}
-    			});
-    		};
-    		var initialRequest = gapi.client.drive.files.list({
-        		  'q' : 'modifiedTime > \''+modifiedAfter+'\'',
-    	          'pageSize': 1000,
-    	          'fields': "nextPageToken, files(id, name)"
-    	        });
-    		getPageOfFiles(initialRequest, []);
-      }
-      function loadAllFiles(files){
-    	  if (files && files.length > 0) {
-              for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                var href = '<a target="_blank" href="https://drive.google.com/file/d/'+file.id +'/view">'+file.name + '</a>';
-                //appendPre(href);
-                listAllComments(href, file.id);
-              }
-            } else {
-              appendPre('No files found.');
-            }
-          
-      }
-	function listAllComments(href,fileId){
-		var callback = loadAllComments;
-  	  var getPageOfComments = function(request, result) {
-  			request.execute(function(resp) {
-  				//result = resp.messages;
-  				resp.comments = resp.comments || [];
-  				result = result.concat(resp.comments);
-  				var nextPageToken = resp.nextPageToken;
-  				if (nextPageToken) {
-  					request = gapi.client.drive.comments.list({
-  						  'fileId' : fileId,
-  				          'pageSize': 100,
-  				          'pageToken': nextPageToken,
-  				          'fields': "nextPageToken, files(id, name)"
-  				        });
-  					getPageOfFiles(request, result);
-  				} else {
-  					callback(href, result);
-  				}
-  			});
-  		};
-  		var initialRequest = gapi.client.drive.comments.list({
-  	  		  'fileId' : fileId,
-  	          'pageSize': 100,
-  	          'fields': "nextPageToken, comments(id,content,htmlContent,resolved)"
-  	        });
-  		getPageOfComments(initialRequest, []);
-	}
-	function loadAllComments(href, comments){		
-		if (comments && comments.length > 0) {
-			console.log(comments);
-            for (var i = 0; i < comments.length; i++) {
-              var comment = comments[i];
-              var content = comment.content;              
-              if(!comment.resolved && content.indexOf(loggedInUser) > -1){
-            	  var hrefMessage = href+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+comment.htmlContent;
-                  appendPre(hrefMessage);
-              }             
-            }
-          }
-	}
-	function sleep(milliseconds) {
-		  var start = new Date().getTime();
-		  for (var i = 0; i < 1e7; i++) {
-		    if ((new Date().getTime() - start) > milliseconds){
-		      break;
-		    }
-		  }
-		}
+      
     </script>
 
     <script async defer src="https://apis.google.com/js/api.js"

@@ -1,239 +1,257 @@
-var clientId = '453486582246-qr4dr1lbclp9149pead96tbtetuvcduj.apps.googleusercontent.com';
-      var apiKey = 'sMbzHoT3dzZGBk_ZJaOA-ClH';
-      var scopes ='https://www.googleapis.com/auth/drive.metadata.readonly';
+//Client ID and API key from the Developer Console
+var CLIENT_ID = '453486582246-qr4dr1lbclp9149pead96tbtetuvcduj.apps.googleusercontent.com';
+var API_KEY = 'AIzaSyBPUJKB5QecgWwtdU4CmX9SrDnXpf0V3w8';
+var daysDiff = 7*24*60*60*1000;
+// Array of API discovery doc URLs for APIs used by the quickstart
+var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+var loggedInUser;
+// Authorization scopes required by the API; multiple scopes can be
+// included, separated by spaces.
+var SCOPES = 'https://www.googleapis.com/auth/drive profile email';
 
-      function handleClientLoad() {
-        gapi.client.setApiKey(apiKey);
-        gapi.load('client:auth2', initClient);
-        window.setTimeout(checkAuth, 1);
-      }
+var authorizeButton = document.getElementById('authorize_button');
+var signoutButton = document.getElementById('signout_button');
 
-      function checkAuth() {
-        gapi.auth.authorize({
-          client_id: clientId,
-          scope: scopes,
-          immediate: true
-        }, handleAuthResult);
-      }
+/**
+ *  On load, called to load the auth2 library and API client library.
+ */
+function handleClientLoad() {
+	gapi.load('client:auth2', initClient);
+}
 
-      function handleAuthClick() {
-        gapi.auth.authorize({
-          client_id: clientId,
-          scope: scopes,
-          immediate: false
-        }, handleAuthResult);
-        return false;
-      }
+/**
+ *  Initializes the API client library and sets up sign-in state
+ *  listeners.
+ */
+function initClient() {
+	gapi.client.init({
+		apiKey: API_KEY,
+		clientId: CLIENT_ID,
+		discoveryDocs: DISCOVERY_DOCS,
+		scope: SCOPES
+	}).then(function () {
+		// Listen for sign-in state changes.
+		gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
-      function handleAuthResult(authResult) {
-        if(authResult && !authResult.error) {
-          loadGmailApi();
-          $('#authorize-button').remove();
-          $('.table-inbox').removeClass("hidden");
-          $('#compose-button').removeClass("hidden");
-        } else {
-          $('#authorize-button').removeClass("hidden");
-          $('#authorize-button').on('click', function(){
-            handleAuthClick();
-          });
-        }
-      }
+		// Handle the initial sign-in state.
+		updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+		authorizeButton.onclick = handleAuthClick;
+		signoutButton.onclick = handleSignoutClick;
+	});
+}
 
-      function loadGmailApi() {
-        gapi.client.load('gmail', 'v1', displayInbox);
-      }
+/**
+ *  Called when the signed in status changes, to update the UI
+ *  appropriately. After a sign-in, the API is called.
+ */
+function updateSigninStatus(isSignedIn) {
+	if (isSignedIn) {
+		loggedInUser = "+"+gapi.auth2.getAuthInstance().currentUser.Ab.w3.U3 ;
+		$(authorizeButton).addClass('hidden');
+		$(signoutButton).removeClass('hidden');
+		$('.table-inbox').removeClass("hidden");
+		listFiles();
+	} else {
+		$(signoutButton).addClass('hidden');
+		$(authorizeButton).removeClass('hidden');
+	}
+}
 
-      function displayInbox() {
-        var request = gapi.client.gmail.users.messages.list({
-          'userId': 'me',
-          'labelIds': 'INBOX',
-          'maxResults': 10
-        });
-        request.execute(function(response) {
-          $.each(response.messages, function() {
-            var messageRequest = gapi.client.gmail.users.messages.get({
-              'userId': 'me',
-              'id': this.id
-            });
-            messageRequest.execute(appendMessageRow);
-          });
-        });
-      }
+/**
+ *  Sign in the user upon button click.
+ */
+function handleAuthClick(event) {
+	gapi.auth2.getAuthInstance().signIn({
+		scope: 'profile email'
+	}).then(function(response){
+		try{
+			loggedInUser = "+"+response.w3.U3 ;
+		} catch(e){
+			console.log('error', e );
+		}
 
-      function appendMessageRow(message) {
-        $('.table-inbox tbody').append(
-          '<tr>\
-            <td>'+getHeader(message.payload.headers, 'From')+'</td>\
-            <td>\
-              <a href="#message-modal-' + message.id +
-                '" data-toggle="modal" id="message-link-' + message.id+'">' +
-                getHeader(message.payload.headers, 'Subject') +
-              '</a>\
-            </td>\
-            <td>'+getHeader(message.payload.headers, 'Date')+'</td>\
-          </tr>'
-        );
-        var reply_to = (getHeader(message.payload.headers, 'Reply-to') !== '' ?
-          getHeader(message.payload.headers, 'Reply-to') :
-          getHeader(message.payload.headers, 'From')).replace(/\"/g, '&quot;');
+	});
+}
 
-        var reply_subject = 'Re: '+getHeader(message.payload.headers, 'Subject').replace(/\"/g, '&quot;');
-        $('body').append(
-          '<div class="modal fade" id="message-modal-' + message.id +
-              '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">\
-            <div class="modal-dialog modal-lg">\
-              <div class="modal-content">\
-                <div class="modal-header">\
-                  <button type="button"\
-                          class="close"\
-                          data-dismiss="modal"\
-                          aria-label="Close">\
-                    <span aria-hidden="true">&times;</span></button>\
-                  <h4 class="modal-title" id="myModalLabel">' +
-                    getHeader(message.payload.headers, 'Subject') +
-                  '</h4>\
-                </div>\
-                <div class="modal-body">\
-                  <iframe id="message-iframe-'+message.id+'" srcdoc="<p>Loading...</p>">\
-                  </iframe>\
-                </div>\
-                <div class="modal-footer">\
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>\
-                  <button type="button" class="btn btn-primary reply-button" data-dismiss="modal" data-toggle="modal" data-target="#reply-modal"\
-                  onclick="fillInReply(\
-                    \''+reply_to+'\', \
-                    \''+reply_subject+'\', \
-                    \''+getHeader(message.payload.headers, 'Message-ID')+'\'\
-                    );"\
-                  >Reply</button>\
-                </div>\
-              </div>\
-            </div>\
-          </div>'
-        );
-        $('#message-link-'+message.id).on('click', function(){
-          var ifrm = $('#message-iframe-'+message.id)[0].contentWindow.document;
-          $('body', ifrm).html(getBody(message.payload));
-        });
-      }
+/**
+ *  Sign out the user upon button click.
+ */
+function handleSignoutClick(event) {
+	gapi.auth2.getAuthInstance().signOut();
+}
 
-      function sendEmail()
-      {
-        $('#send-button').addClass('disabled');
+/**
+ * Append a pre element to the body containing the given message
+ * as its text node. Used to display the results of the API call.
+ *
+ * @param {string} message Text to be placed in pre element.
+ */
+function appendPre(file, comment) {
+	$('.table-inbox tbody').append(
+			'<tr>\
+			<td><a target="_blank" href="https://drive.google.com/file/d/'+file.id +'/view">'+file.name + '</a></td>\
+			<td>\
+			' + comment.content +
+			'</td>\
+			<td><button id="'+comment.id+'"  class="btn btn-primary" onclick="fillInReply(\''+file.name+'\',\''+ comment.content +'\',this.id,\''+file.id+'\')">Reply</button>\
+			<button id="'+comment.id+'"  class="btn btn-primary" onclick="markAsResolved(this.id)"> Mark As Resolved</button>\
+			</td>\
+			</tr>'
+	);
+}
+function markAsResolved(commentId, fileId){
+	var sendRequest = gapi.client.drive.comments.create({
+		'fileId' : fileId,
+		'commentId': messageId,
+		'resource': {
+			'resolved': true
+		}
+	});
+	sendRequest.execute(function(response){
+		console.log(response);
+		if(response.resolved){
+			$('#'+commentId).addClass('disabled');	
+		}		
+	});
+}
+function sendReply()
+{
+	$('#reply-button').addClass('disabled');
 
-        sendMessage(
-          {
-            'To': $('#compose-to').val(),
-            'Subject': $('#compose-subject').val()
-          },
-          $('#compose-message').val(),
-          composeTidy
-        );
+	sendMessage(
+			$('#reply-message-id').attr('fileId'),
+			$('#reply-message-id').val(),
+			$('#reply-message').val(),
+			replyTidy
+	);
 
-        return false;
-      }
+	return false;
+}
 
-      function composeTidy()
-      {
-        $('#compose-modal').modal('hide');
+function replyTidy()
+{
+	$('#reply-modal').modal('hide');
 
-        $('#compose-to').val('');
-        $('#compose-subject').val('');
-        $('#compose-message').val('');
+	$('#reply-message').val('');
 
-        $('#send-button').removeClass('disabled');
-      }
+	$('#reply-button').removeClass('disabled');
+}
 
-      function sendReply()
-      {
-        $('#reply-button').addClass('disabled');
+function fillInReply(to, subject, message_id, fileId)
+{
+	$('#reply-to').val(to);
+	$('#reply-subject').val(subject);
+	$('#reply-message-id').val(message_id);
+	$('#reply-message-id').attr('fileId', fileId)
+}
 
-        sendMessage(
-          {
-            'To': $('#reply-to').val(),
-            'Subject': $('#reply-subject').val(),
-            'In-Reply-To': $('#reply-message-id').val()
-          },
-          $('#reply-message').val(),
-          replyTidy
-        );
+function sendMessage(messageId, message, callback)
+{
 
-        return false;
-      }
+	var sendRequest = gapi.client.drive.comments.create({
+		'fileId' : fileId,
+		'commentId': messageId,
+		'resource': {
+			'content': message
+		}
+	});
 
-      function replyTidy()
-      {
-        $('#reply-modal').modal('hide');
+	return sendRequest.execute(callback);
+}
+/**
+ * Print files.
+ */
+function listFiles() {
+	var callback = loadAllFiles;
+	var modifiedAfter = (new Date(new Date()-daysDiff)).toISOString().split(".")[0]
+	var getPageOfFiles = function(request, result) {
+		request.execute(function(resp) {
+			//result = resp.messages;
+			resp.files = resp.files || [];
+			result = result.concat(resp.files);
+			var nextPageToken = resp.nextPageToken;
+			if (nextPageToken) {
+				request = gapi.client.drive.files.list({
+					'q' : 'modifiedTime >'+modifiedAfter,
+					'pageSize': 1000,
+					'pageToken': nextPageToken,
+					'fields': "nextPageToken, files(id, name)"
+				});
+				getPageOfFiles(request, result);
+			} else {
+				callback(result);
+			}
+		});
+	};
+	var initialRequest = gapi.client.drive.files.list({
+		'q' : 'modifiedTime > \''+modifiedAfter+'\'',
+		'pageSize': 1000,
+		'fields': "nextPageToken, files(id, name)"
+	});
+	getPageOfFiles(initialRequest, []);
+}
+function loadAllFiles(files){
+	if (files && files.length > 0) {
+		for (var i = 0; i < files.length; i++) {
+			var file = files[i];
+			var href = '<a target="_blank" href="https://drive.google.com/file/d/'+file.id +'/view">'+file.name + '</a>';
+			//appendPre(href);
+			listAllComments(file);
+		}
+	} else {
+		appendPre('No files found.');
+	}
 
-        $('#reply-message').val('');
-
-        $('#reply-button').removeClass('disabled');
-      }
-
-      function fillInReply(to, subject, message_id)
-      {
-        $('#reply-to').val(to);
-        $('#reply-subject').val(subject);
-        $('#reply-message-id').val(message_id);
-      }
-
-      function sendMessage(headers_obj, message, callback)
-      {
-        var email = '';
-
-        for(var header in headers_obj)
-          email += header += ": "+headers_obj[header]+"\r\n";
-
-        email += "\r\n" + message;
-
-        var sendRequest = gapi.client.gmail.users.messages.send({
-          'userId': 'me',
-          'resource': {
-            'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_')
-          }
-        });
-
-        return sendRequest.execute(callback);
-      }
-
-      function getHeader(headers, index) {
-        var header = '';
-        $.each(headers, function(){
-          if(this.name.toLowerCase() === index.toLowerCase()){
-            header = this.value;
-          }
-        });
-        return header;
-      }
-
-      function getBody(message) {
-        var encodedBody = '';
-        if(typeof message.parts === 'undefined')
-        {
-          encodedBody = message.body.data;
-        }
-        else
-        {
-          encodedBody = getHTMLPart(message.parts);
-        }
-        encodedBody = encodedBody.replace(/-/g, '+').replace(/_/g, '/').replace(/\s/g, '');
-        return decodeURIComponent(escape(window.atob(encodedBody)));
-      }
-
-      function getHTMLPart(arr) {
-        for(var x = 0; x <= arr.length; x++)
-        {
-          if(typeof arr[x].parts === 'undefined')
-          {
-            if(arr[x].mimeType === 'text/html')
-            {
-              return arr[x].body.data;
-            }
-          }
-          else
-          {
-            return getHTMLPart(arr[x].parts);
-          }
-        }
-        return '';
-      }
+}
+function listAllComments(file){
+	var fileId = file.id;
+	var callback = loadAllComments;
+	var getPageOfComments = function(request, result) {
+		request.execute(function(resp) {
+			//result = resp.messages;
+			resp.comments = resp.comments || [];
+			result = result.concat(resp.comments);
+			var nextPageToken = resp.nextPageToken;
+			if (nextPageToken) {
+				request = gapi.client.drive.comments.list({
+					'fileId' : fileId,
+					'pageSize': 100,
+					'pageToken': nextPageToken,
+					'fields': "nextPageToken, files(id, name)"
+				});
+				getPageOfFiles(request, result);
+			} else {
+				callback(file, result);
+			}
+		});
+	};
+	var initialRequest = gapi.client.drive.comments.list({
+		'fileId' : fileId,
+		'pageSize': 100,
+		'fields': "nextPageToken, comments(id,content,htmlContent,resolved)"
+	});
+	getPageOfComments(initialRequest, []);
+}
+function loadAllComments(file, comments){		
+	if (comments && comments.length > 0) {
+		console.log(comments);
+		for (var i = 0; i < comments.length; i++) {
+			var comment = comments[i];
+			var content = comment.content;              
+			if(!comment.resolved && content.indexOf(loggedInUser) > -1){
+				content = content.replace(loggedInUser,'+karthik21');
+				comment.content = content;
+				var hrefMessage = href+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+content;
+				appendPre(file, comment);
+			}             
+		}
+	}
+}
+function sleep(milliseconds) {
+	var start = new Date().getTime();
+	for (var i = 0; i < 1e7; i++) {
+		if ((new Date().getTime() - start) > milliseconds){
+			break;
+		}
+	}
+}
