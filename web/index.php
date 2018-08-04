@@ -35,7 +35,7 @@ table.sortable thead {
 		<button id="authorize_button" class="btn btn-primary hidden">Authorize</button>
 		<button id="signout_button" class="btn btn-primary hidden">Sign Out</button>
 
-		<table class="table table-striped table-inbox hidden sortable">
+		<table class="table table-striped table-inbox hidden dataTable">
 			<thead>
 				<tr>
 					<th style="width: 10%;">Document</th>
@@ -123,7 +123,7 @@ table.sortable thead {
 
 	<script src="js/jquery-2.2.4.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<script src="js/sorttable.js"></script>
+	<script src="js/jquery.dataTables.min.js"></script>
 	<script src="js/options.js"></script>
 	<script async defer src="https://apis.google.com/js/api.js"
 		onload="this.onload=function(){};handleClientLoad()"
