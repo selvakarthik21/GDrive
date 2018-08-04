@@ -6,6 +6,8 @@
 
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
+
 <style>
 iframe {
 	width: 100%;
@@ -16,12 +18,6 @@ iframe {
 }
 table.sortable{
 	margin-top: 20px;
-}
-table.sortable thead {
-    background-color:#eee;
-    color:#666666;
-    font-weight: bold;
-    cursor: default;
 }
 </style>
 </head>
