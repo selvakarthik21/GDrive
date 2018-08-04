@@ -156,7 +156,7 @@ function sendMessage(fileId, messageId, message, callback)
 	var sendRequest = gapi.client.drive.replies.create({
 		'fileId' : fileId,
 		'commentId': messageId,
-		'fields': 'content,resolved',
+		'fields': 'content',
 		'content': message
 	});
 
