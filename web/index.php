@@ -1,4 +1,3 @@
-<?php 
 <!doctype html>
 <html>
 <head>
@@ -124,31 +123,4 @@ iframe {
 		onreadystatechange="if (this.readyState === 'complete') this.onload()">
 	</script>
 </body>
-</html>
-?>
-<?php ?>
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Drive API Quickstart</title>
-    <meta charset="utf-8" />
-  </head>
-  <body>
-    <p>Drive API Quickstart</p>
-
-    <!--Add buttons to initiate auth sequence and sign out-->
-    <button id="authorize_button" style="display: none;">Authorize</button>
-    <button id="signout_button" style="display: none;">Sign Out</button>
-
-    <pre id="content"></pre>
-
-    <script type="text/javascript">
-      
-    </script>
-
-    <script async defer src="https://apis.google.com/js/api.js"
-      onload="this.onload=function(){};handleClientLoad()"
-      onreadystatechange="if (this.readyState === 'complete') this.onload()">
-    </script>
-  </body>
 </html>
