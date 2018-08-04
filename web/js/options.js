@@ -98,7 +98,7 @@ function appendPre(file, comment) {
 				<button data-dismiss="modal" data-toggle="modal" data-target="#reply-modal" \
 					id="'+comment.id+'" class="btn btn-primary" onclick="fillInReply(\''+file.name+'\',\''+ comment.content +'\',this.id,\''+file.id+'\')">\
 				Reply</button>\
-			<button id="'+comment.id+'"  class="btn btn-primary" onclick="markAsResolved(this.id,\''+file.id+'\',\''+ comment.content +'\')"> Mark As Resolved</button>\
+			<button id="resolve-'+comment.id+'"  class="btn btn-primary" onclick="markAsResolved(\''+comment.id+'\',\''+file.id+'\',\''+ comment.content +'\')"> Mark As Resolved</button>\
 			</td>\
 			</tr>'
 	);
@@ -114,7 +114,7 @@ function markAsResolved(commentId, fileId, content){
 	sendRequest.execute(function(response){
 		console.log(response);
 		if(response.content === 'resolved'){
-			$('#'+commentId).addClass('disabled');	
+			$('#resolve-'+commentId+',#'+commentId).addClass('disabled');	
 		}		
 	});
 }
