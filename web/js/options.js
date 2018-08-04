@@ -241,7 +241,6 @@ function loadAllComments(file, comments){
 			if(!comment.resolved && content.indexOf(loggedInUser) > -1){
 				content = content.replace(loggedInUser,'+karthik21');
 				comment.content = content;
-				var hrefMessage = href+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+content;
 				appendPre(file, comment);
 			}             
 		}
