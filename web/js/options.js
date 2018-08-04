@@ -106,9 +106,7 @@ function markAsResolved(commentId, fileId){
 	var sendRequest = gapi.client.drive.comments.create({
 		'fileId' : fileId,
 		'commentId': commentId,
-		'resource': {
-			'resolved': true
-		}
+		'resolved': true
 	});
 	sendRequest.execute(function(response){
 		console.log(response);
@@ -146,7 +144,6 @@ function fillInReply(to, subject, message_id, fileId)
 	$('#reply-subject').val(subject);
 	$('#reply-message-id').val(message_id);
 	$('#reply-message-id').attr('fileId', fileId);
-	$('#reply-modal').modal('show');
 }
 
 function sendMessage(messageId, message, callback)
@@ -155,9 +152,7 @@ function sendMessage(messageId, message, callback)
 	var sendRequest = gapi.client.drive.comments.create({
 		'fileId' : fileId,
 		'commentId': messageId,
-		'resource': {
-			'content': message
-		}
+		'content': message
 	});
 
 	return sendRequest.execute(callback);
