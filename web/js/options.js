@@ -114,7 +114,7 @@ function markAsResolved(commentId, fileId, content){
 	sendRequest.execute(function(response){
 		console.log(response);
 		if(response.content === 'resolved'){
-			$('#resolve-'+commentId+',#'+commentId).addClass('disabled');	
+			$('#resolve-'+commentId+',#'+commentId).attr('disabled','disabled');	
 		}		
 	});
 }
