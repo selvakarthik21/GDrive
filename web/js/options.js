@@ -49,11 +49,12 @@ function updateSigninStatus(isSignedIn) {
 		loggedInUser = "+"+gapi.auth2.getAuthInstance().currentUser.Ab.w3.U3 ;
 		$(authorizeButton).addClass('hidden');
 		$(signoutButton).removeClass('hidden');
-		$('.table-inbox').removeClass("hidden");
+		$('.table-inbox').removeClass("hidden").empty();
 		listFiles();
 	} else {
 		$(signoutButton).addClass('hidden');
 		$(authorizeButton).removeClass('hidden');
+		$('.table-inbox').addClass("hidden").empty();
 	}
 }
 
