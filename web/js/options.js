@@ -105,10 +105,11 @@ function appendPre(file, comment) {
 }
 function markAsResolved(commentId, fileId, content){
 	content = content.replace('+karthik21', loggedInUser);
-	var sendRequest = gapi.client.drive.comments.create({
+	var sendRequest = gapi.client.drive.comments.update({
 		'fileId' : fileId,
 		'commentId': commentId,
 		'resolved': true,
+		'fields': 'content,resolved',
 		'content' : content
 	});
 	sendRequest.execute(function(response){
@@ -152,7 +153,7 @@ function fillInReply(to, subject, message_id, fileId)
 function sendMessage(fileId, messageId, message, callback)
 {
 
-	var sendRequest = gapi.client.drive.comments.create({
+	var sendRequest = gapi.client.drive.replies.create({
 		'fileId' : fileId,
 		'commentId': messageId,
 		'content': message
