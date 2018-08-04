@@ -109,11 +109,11 @@ function markAsResolved(commentId, fileId, content){
 		'commentId': commentId,
 		'fields': 'content',
 		'action' : 'resolve',
-		'content': 'resolved by '+loggedInUser
+		'content': 'resolved'
 	});
 	sendRequest.execute(function(response){
 		console.log(response);
-		if(response.resolved){
+		if(response.content === 'resolved'){
 			$('#'+commentId).addClass('disabled');	
 		}		
 	});
