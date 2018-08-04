@@ -306,7 +306,7 @@ iframe {
 	}
 	function loadAllComments(href, comments){		
 		if (comments && comments.length > 0) {
-			console.log(data);
+			console.log(comments);
             for (var i = 0; i < comments.length; i++) {
               var comment = comments[i];
               var content = comment.content;              
