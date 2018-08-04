@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<title>Gmail API demo</title>
+<title>GDrive List Action Items</title>
 <meta charset="UTF-8">
 
 <link rel="stylesheet" href="css/bootstrap.min.css">
