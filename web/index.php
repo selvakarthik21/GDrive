@@ -145,7 +145,7 @@ iframe {
       var daysDiff = 7*24*60*60*1000;
       // Array of API discovery doc URLs for APIs used by the quickstart
       var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
-
+	  var loggedInUser;
       // Authorization scopes required by the API; multiple scopes can be
       // included, separated by spaces.
       var SCOPES = 'https://www.googleapis.com/auth/drive';
@@ -200,7 +200,16 @@ iframe {
        *  Sign in the user upon button click.
        */
       function handleAuthClick(event) {
-        gapi.auth2.getAuthInstance().signIn();
+        gapi.auth2.getAuthInstance().signIn({
+        	  scope: 'profile email'
+        }).then(function(response){
+            try{
+        		loggedInUser = "+"+response.w3.U3 ;
+            } catch(e){
+            	console.log('error', e );
+            }
+        	
+        });
       }
 
       /**
@@ -259,7 +268,7 @@ iframe {
               for (var i = 0; i < files.length; i++) {
                 var file = files[i];
                 var href = '<a target="_blank" href="https://drive.google.com/file/d/'+file.id +'/view">'+file.name + '</a>';
-                appendPre(href);
+                //appendPre(href);
                 listAllComments(href, file.id);
               }
             } else {
@@ -295,13 +304,16 @@ iframe {
   	        });
   		getPageOfComments(initialRequest, []);
 	}
-	function loadAllComments(href, data){
-		console.log(data);
-		if (data && data.length > 0) {
-            for (var i = 0; i < data.length; i++) {
-              var file = data[i];
-              var hrefMessage = href+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+file.htmlContent;
-              appendPre(hrefMessage);
+	function loadAllComments(href, comments){		
+		if (comments && comments.length > 0) {
+			console.log(data);
+            for (var i = 0; i < comments.length; i++) {
+              var comment = comments[i];
+              var content = comment.content;              
+              if(!comment.resolved && content.indexOf(loggedInUser) > -1){
+            	  var hrefMessage = href+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+comment.htmlContent;
+                  appendPre(hrefMessage);
+              }             
             }
           }
 	}
