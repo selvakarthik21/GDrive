@@ -14,6 +14,9 @@ iframe {
 	height: 600px;
 	display: flex;
 }
+table.sortable{
+	margin-top: 20px;
+}
 table.sortable thead {
     background-color:#eee;
     color:#666666;
@@ -120,7 +123,7 @@ table.sortable thead {
 
 	<script src="js/jquery-2.2.4.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-
+	<script src="js/sorttable.js"></script>
 	<script src="js/options.js"></script>
 	<script async defer src="https://apis.google.com/js/api.js"
 		onload="this.onload=function(){};handleClientLoad()"
