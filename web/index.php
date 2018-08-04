@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<title>GDrive List Action Items</title>
+<title>Action Items Manager</title>
 <meta charset="UTF-8">
 
 <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -23,7 +23,7 @@ table.sortable{
 </head>
 <body>
 	<div class="container">
-		<h1>GDrive List Action Items</h1>
+		<h1>Action Items Manager</h1>
 
 		<a href="#compose-modal" data-toggle="modal" id="compose-button"
 			class="btn btn-primary pull-right hidden">Compose</a>
