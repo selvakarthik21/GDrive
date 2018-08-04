@@ -93,8 +93,11 @@ function appendPre(file, comment) {
 			<td>\
 			' + comment.content +
 			'</td>\
-			<td><button id="'+comment.id+'"  class="btn btn-primary" onclick="fillInReply(\''+file.name+'\',\''+ comment.content +'\',this.id,\''+file.id+'\')">Reply</button>\
-			<button id="'+comment.id+'"  class="btn btn-primary" onclick="markAsResolved(this.id)"> Mark As Resolved</button>\
+			<td>\
+				<button data-dismiss="modal" data-toggle="modal" data-target="#reply-modal" \
+					id="'+comment.id+'" class="btn btn-primary" onclick="fillInReply(\''+file.name+'\',\''+ comment.content +'\',this.id,\''+file.id+'\')">\
+				Reply</button>\
+			<button id="'+comment.id+'"  class="btn btn-primary" onclick="markAsResolved(this.id,\''+file.id+'\')"> Mark As Resolved</button>\
 			</td>\
 			</tr>'
 	);
@@ -102,7 +105,7 @@ function appendPre(file, comment) {
 function markAsResolved(commentId, fileId){
 	var sendRequest = gapi.client.drive.comments.create({
 		'fileId' : fileId,
-		'commentId': messageId,
+		'commentId': commentId,
 		'resource': {
 			'resolved': true
 		}
@@ -142,7 +145,8 @@ function fillInReply(to, subject, message_id, fileId)
 	$('#reply-to').val(to);
 	$('#reply-subject').val(subject);
 	$('#reply-message-id').val(message_id);
-	$('#reply-message-id').attr('fileId', fileId)
+	$('#reply-message-id').attr('fileId', fileId);
+	$('#reply-modal').modal('show');
 }
 
 function sendMessage(messageId, message, callback)
