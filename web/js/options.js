@@ -106,7 +106,7 @@ function appendPre(file, comment) {
 function markAsResolved(commentId, fileId, content){
 	var sendRequest = gapi.client.drive.replies.create({
 		'fileId' : fileId,
-		'commentId': messageId,
+		'commentId': commentId,
 		'fields': 'content, resolved',
 		'action' : 'resolve',
 		'content': 'resolved by '+loggedInUser
