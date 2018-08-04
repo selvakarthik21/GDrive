@@ -107,7 +107,7 @@ function markAsResolved(commentId, fileId, content){
 	var sendRequest = gapi.client.drive.replies.create({
 		'fileId' : fileId,
 		'commentId': commentId,
-		'fields': 'content, resolved',
+		'fields': 'content',
 		'action' : 'resolve',
 		'content': 'resolved by '+loggedInUser
 	});
