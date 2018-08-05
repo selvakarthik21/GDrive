@@ -19,6 +19,9 @@ iframe {
 table.sortable{
 	margin-top: 20px;
 }
+td.reorder{
+	text-align: left !important;
+}
 </style>
 </head>
 <body>
