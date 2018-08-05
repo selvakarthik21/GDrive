@@ -34,6 +34,7 @@ table.sortable{
 		<table class="table table-striped table-inbox hidden dataTable">
 			<thead>
 				<tr>
+					<th style="width: 0%"></th>
 					<th style="width: 10%;">Document</th>
 					<th style="width: 10%;">Created At</th>
 					<th style="width: 57%">Action Item Message</th>
