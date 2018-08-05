@@ -120,7 +120,9 @@ table.sortable{
 	<script src="js/jquery-2.2.4.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery.dataTables.min.js"></script>
+	<script src="js/dataTables.rowReorder.min.js"></script>
 	<script src="js/options.js"></script>
+	
 	<script async defer src="https://apis.google.com/js/api.js"
 		onload="this.onload=function(){};handleClientLoad()"
 		onreadystatechange="if (this.readyState === 'complete') this.onload()">
