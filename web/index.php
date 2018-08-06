@@ -22,6 +22,22 @@ table.sortable{
 td.reorder{
 	text-align: left !important;
 }
+#loading-img {
+    background: url(img/Velocity.gif) center center no-repeat;
+    height: 100%;
+    z-index: 20;
+}
+
+.overlay {
+    background: #e9e9e9;
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.5;
+}
 </style>
 </head>
 <body>
@@ -46,6 +62,9 @@ td.reorder{
 			</thead>
 			<tbody></tbody>
 		</table>
+		<div class="overlay">
+		    <div id="loading-img"></div>
+		</div>
 	</div>
 
 	<div class="modal fade" id="compose-modal" tabindex="-1" role="dialog">
