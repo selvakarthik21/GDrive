@@ -29,7 +29,7 @@ td.reorder{
 }
 
 .overlay {
-    background: #e9e9e9;
+    background: white;
     display: none;
     position: absolute;
     top: 0;
