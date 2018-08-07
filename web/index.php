@@ -38,17 +38,33 @@ td.reorder{
     left: 0;
     opacity: 0.5;
 }
+.title{
+	text-transform: uppercase;
+	font-size: 24px;
+	width: 350px;
+    float: left;
+    padding-top: 10px;
+    position: absolute;
+}
+.logo{
+	background: url(img/logo.png) no-repeat;
+    width: 100%;
+    height: 60px;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
 </style>
 </head>
 <body>
 	<div class="container">
-		<h1>Action Items Manager</h1>
+		<div class="logo"></div>		
+		<div class="title">Action Items Manager</div>
 
 		<a href="#compose-modal" data-toggle="modal" id="compose-button"
 			class="btn btn-primary pull-right hidden">Compose</a>
 
-		<button id="authorize_button" class="btn btn-primary hidden">Authorize</button>
-		<button id="signout_button" class="btn btn-primary hidden">Sign Out</button>
+		<button id="authorize_button" class="btn btn-primary hidden" style="margin-top: 50px;">Authorize</button>
+		
 
 		<table class="table table-striped table-inbox hidden dataTable">
 			<thead>
