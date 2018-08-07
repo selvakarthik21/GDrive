@@ -53,6 +53,9 @@ td.reorder{
     background-repeat: no-repeat;
     background-size: auto 100%;
 }
+.no-footer{
+	margin-top: 17px;
+} 
 </style>
 </head>
 <body>
