@@ -49,8 +49,8 @@ td.reorder{
 }
 .logo{
 	background: url(img/logo.png) no-repeat;
-    width: 100%;
-    height: 60px;
+    width: 150px;
+    height: 56px;
     background-repeat: no-repeat;
     background-size: auto 100%;
 }
@@ -62,34 +62,43 @@ td.reorder{
 }
 </style>
 </head>
-<body>
-	<div class="container">
-		<div class="logo"></div>		
-		<div class="title">Action Items Manager</div>
+<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+	<div class="mdl-layout__container has-scrolling-header">
+		<div
+			class="mdl-layout mdl-js-layout mdl-layout--fixed-header has-tabs is-upgraded"
+			data-upgraded=",MaterialLayout">
+			<header
+				class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
 
-		<a href="#compose-modal" data-toggle="modal" id="compose-button"
-			class="btn btn-primary pull-right hidden">Compose</a>
+				<div class="mdl-layout--large-screen-only mdl-layout__header-row">
+					<div class="logo"></div> <h3>Action Items Manager</h3>
+				</div>
 
-		<button id="authorize_button" class="btn btn-primary hidden" style="margin-top: 50px;">Authorize</button>
-		
 
-		<table class="table table-striped table-inbox hidden dataTable">
-			<thead>
-				<tr>
-					<th style="width: 0%;"></th>
-					<th style="width: 10%;">Name</th>
-					<th style="width: 12%;">Created On</th>
-					<th style="width: 53%">Action Item</th>
-					<th style="width: 25%; padding-right: 0px;"></th>
-				</tr>
-			</thead>
-			<tbody></tbody>
-		</table>
-		<div class="overlay">
-		    <div id="loading-img"></div>
+			</header>
+			<main class="mdl-layout__content">
+
+			<button id="authorize_button" class="btn btn-primary hidden"
+				style="margin-top: 50px;">Authorize</button>
+
+			<table class="table table-striped table-inbox hidden dataTable">
+				<thead>
+					<tr>
+						<th style="width: 0%;"></th>
+						<th style="width: 10%;">Name</th>
+						<th style="width: 12%;">Created On</th>
+						<th style="width: 53%">Action Item</th>
+						<th style="width: 25%; padding-right: 0px;"></th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+			<div class="overlay">
+				<div id="loading-img"></div>
+			</div>
+			</main>
 		</div>
 	</div>
-
 	<div class="modal fade" id="reply-modal" tabindex="-1" role="dialog" style="display:none;">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
