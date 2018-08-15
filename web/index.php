@@ -81,7 +81,7 @@ td.reorder{
 			<button id="authorize_button" class="btn btn-primary hidden"
 				style="margin-top: 50px;">Authorize</button>
 
-			<table class="table table-striped table-inbox hidden dataTable">
+			<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp table-inbox hidden dataTable">
 				<thead>
 					<tr>
 						<th style="width: 0%;"></th>
