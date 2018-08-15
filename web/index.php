@@ -7,8 +7,7 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="css/material.min.css">
-<link rel="stylesheet" href="css/icon.css">
+
 <style>
 iframe {
 	width: 100%;
