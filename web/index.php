@@ -78,8 +78,8 @@ td.reorder{
 				<tr>
 					<th style="width: 0%;"></th>
 					<th style="width: 10%;">Name</th>
-					<th style="width: 10%;">Created On</th>
-					<th style="width: 55%">Action Item</th>
+					<th style="width: 12%;">Created On</th>
+					<th style="width: 53%">Action Item</th>
 					<th style="width: 25%"></th>
 				</tr>
 			</thead>
