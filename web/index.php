@@ -6,6 +6,8 @@
 
 <link rel="stylesheet" href="css/material.min.css">
 <link rel="stylesheet" href="css/icon.css">
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="css/dataTables.material.min.css">
 
 <style>
 iframe {
@@ -60,24 +62,18 @@ td.reorder{
 }
 </style>
 </head>
-<body class="mdc-typography">
-	<header class="mdc-toolbar mdc-toolbar--fixed">
-      <div class="mdc-toolbar__row">
-        <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-          <div class="catalog-logo mdc-toolbar__menu-icon logo">
-          </div>
-          <span class="mdc-toolbar__title catalog-title">Action Items Manager</span>
-        </section>
-      </div>
-    </header>
+<body>
 	<div class="container">
+		<div class="logo"></div>		
+		<div class="title">Action Items Manager</div>
+
 		<a href="#compose-modal" data-toggle="modal" id="compose-button"
 			class="btn btn-primary pull-right hidden">Compose</a>
 
 		<button id="authorize_button" class="btn btn-primary hidden" style="margin-top: 50px;">Authorize</button>
 		
 
-		<table class="table-inbox hidden dataTable">
+		<table class="table table-striped table-inbox hidden dataTable">
 			<thead>
 				<tr>
 					<th style="width: 0%;"></th>
@@ -135,6 +131,7 @@ td.reorder{
 	<script src="js/jquery.dataTables.min.js"></script>
 	<script src="js/dataTables.rowReorder.min.js"></script>
 	<script src="js/material.min.js"></script>
+	<script src="js/dataTables.material.min.js"></script>
 	<script src="js/options.js"></script>
 	
 	<script async defer src="https://apis.google.com/js/api.js"
