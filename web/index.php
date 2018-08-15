@@ -6,7 +6,10 @@
 
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="css/material.min.css">
+<link rel="stylesheet" href="css/icon.css">
 <link rel="stylesheet" href="css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="css/dataTables.material.min.css">
 
 <style>
 iframe {
@@ -166,6 +169,8 @@ td.reorder{
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery.dataTables.min.js"></script>
 	<script src="js/dataTables.rowReorder.min.js"></script>
+	<script src="js/material.min.js"></script>
+	<script src="js/dataTables.material.min.js"></script>
 	<script src="js/options.js"></script>
 	
 	<script async defer src="https://apis.google.com/js/api.js"
