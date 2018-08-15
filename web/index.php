@@ -77,10 +77,10 @@ td.reorder{
 			<thead>
 				<tr>
 					<th style="width: 0%;"></th>
-					<th style="width: 10%;">Document</th>
-					<th style="width: 10%;">Created At</th>
-					<th style="width: 57%">Action Item Message</th>
-					<th style="width: 23%"></th>
+					<th style="width: 10%;">Name</th>
+					<th style="width: 10%;">Created On</th>
+					<th style="width: 55%">Action Item</th>
+					<th style="width: 25%"></th>
 				</tr>
 			</thead>
 			<tbody></tbody>
@@ -166,8 +166,8 @@ td.reorder{
 	<script src="js/jquery-2.2.4.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery.dataTables.min.js"></script>
-	<script src="js/dataTables.material.min.js"></script>
 	<script src="js/dataTables.rowReorder.min.js"></script>
+	<script src="js/dataTables.material.min.js"></script>
 	<script src="js/options.js"></script>
 	
 	<script async defer src="https://apis.google.com/js/api.js"
