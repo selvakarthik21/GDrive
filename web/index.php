@@ -7,7 +7,8 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="css/jquery.dataTables.min.css">
-
+<link rel="stylesheet" href="css/material.min.css">
+<link rel="stylesheet" href="css/dataTables.material.min.css">
 <style>
 iframe {
 	width: 100%;
@@ -165,6 +166,7 @@ td.reorder{
 	<script src="js/jquery-2.2.4.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery.dataTables.min.js"></script>
+	<script src="js/dataTables.material.min.js"></script>
 	<script src="js/dataTables.rowReorder.min.js"></script>
 	<script src="js/options.js"></script>
 	
