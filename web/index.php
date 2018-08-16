@@ -60,6 +60,7 @@ td.reorder{
 .container{
 	margin-top: 10px;
 }
+.dataTable
 </style>
 </head>
 <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
@@ -84,7 +85,7 @@ td.reorder{
 			<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp table-inbox hidden dataTable">
 				<thead>
 					<tr>
-						<th style="width: 0%;"></th>
+						<th style="width: 0%;display: none;" ></th>
 						<th style="width: 10%;">Name</th>
 						<th style="width: 12%;">Created On</th>
 						<th style="width: 53%">Action Item</th>
