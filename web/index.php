@@ -7,59 +7,7 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="css/jquery.dataTables.min.css">
-
-<style>
-iframe {
-	width: 100%;
-	border: 0;
-	min-height: 80%;
-	height: 600px;
-	display: flex;
-}
-table.sortable{
-	margin-top: 20px;
-}
-td.reorder{
-	text-align: left !important;
-}
-#loading-img {
-    background: url(img/Velocity.gif) center center no-repeat;
-    height: 100%;
-    z-index: 20;
-}
-
-.overlay {
-    background: white;
-    display: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    opacity: 0.5;
-}
-.title{
-	text-transform: uppercase;
-	font-size: 24px;
-	width: 350px;
-    float: left;
-    padding-top: 10px;
-    position: absolute;
-}
-.logo{
-	background: url(img/logo.png) no-repeat;
-    width: 100%;
-    height: 60px;
-    background-repeat: no-repeat;
-    background-size: auto 100%;
-}
-.no-footer{
-	margin-top: 17px;
-} 
-.container{
-	margin-top: 10px;
-}
-</style>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 	<div class="container">
@@ -75,7 +23,7 @@ td.reorder{
 					<th style="width: 10%;">Document</th>
 					<th style="width: 10%;">Created At</th>
 					<th style="width: 57%">Action Item Message</th>
-					<th style="width: 23%"></th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody></tbody>

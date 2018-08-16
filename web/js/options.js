@@ -197,11 +197,11 @@ function listFiles() {
 		return;
 	}
 	try{
-		$('.table-inbox').DataTable().clear();
+		$('.table-inbox').DataTable().clear().draw();
 	}catch(e){
 		console.log(e);
 	}
-	$('.table-inbox tbody').empty();
+	//$('.table-inbox tbody').empty();
 	var callback = loadAllFiles;
 	$('#date').css({'borderColor':''});
 	var modifiedAfter = (new Date(date)).toISOString().split(".")[0];
@@ -291,7 +291,7 @@ function listAllComments(file){
 }
 function makeTableSortable(){
 	try{
-		$('.table-inbox').DataTable().clear();
+		$('.table-inbox').DataTable().clear().draw();
 		$('.table-inbox').DataTable().destroy();
 	}catch(e){
 		console.log(e);
