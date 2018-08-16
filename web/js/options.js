@@ -110,11 +110,11 @@ function appendPre(file, comment) {
 			' + comment.content +
 			'</td>\
 			<td>\
-			<i class="pull-left fa fa-reply" data-dismiss="modal" data-toggle="modal" data-target="#reply-modal" \
+			<i class="icons fa fa-reply" data-dismiss="modal" data-toggle="modal" data-target="#reply-modal" \
 					id="'+comment.id+'" onclick="fillInReply(\''+file.name+'\',\''+ escape(comment.content) +'\',this.id,\''+file.id+'\')">\
 			</i>\
-			<i id="resolve-'+comment.id+'" class="pull-left fa fa-trash" aria-hidden="true"></i>\
-			<i id="resolve-'+comment.id+'"  class="pull-left fa fa-check" onclick="markAsResolved(\''+comment.id+'\',\''+file.id+'\')" tooltip="Mark As Resolved"></i>\
+			<i id="delete-'+comment.id+'"  class="icons fa fa-trash" onclick="deleteComment(\''+comment.id+'\',\''+file.id+'\')" tooltip="Mark As Resolved"></i>\
+			<i id="resolve-'+comment.id+'" class="icons fa fa-check" onclick="markAsResolved(\''+comment.id+'\',\''+file.id+'\')" tooltip="Mark As Resolved"></i>\
 			</td>\
 			</tr>';
 	var table = $('.table-inbox').DataTable();
@@ -128,6 +128,21 @@ function appendPre(file, comment) {
 		table.row.add($(newRow )).draw();
 	}
 	
+}
+function deleteComment(commentId, fileId){
+	var sendRequest = gapi.client.drive.comments.delete({
+		'fileId' : fileId,
+		'commentId': commentId
+	});
+	sendRequest.execute(function(response){
+		console.log(response);
+		if(response){
+			var $row = $('#delete-'+commentId).closest('tr');
+			$row.addClass('deleted');
+			var table = $('.table-inbox').DataTable();
+			table.row('.deleted').remove().draw( false );			
+		}		
+	});
 }
 function markAsResolved(commentId, fileId){
 	var sendRequest = gapi.client.drive.replies.create({
