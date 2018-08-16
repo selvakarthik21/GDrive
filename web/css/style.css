@@ -52,6 +52,7 @@ td.reorder{
     padding-right: 0px;
 }
 .dataTable th:last-child label {
+	clear: both;
     float: right;
-    width: 234px;
+    width: 234px !important;
 }

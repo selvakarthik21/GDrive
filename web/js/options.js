@@ -110,10 +110,11 @@ function appendPre(file, comment) {
 			' + comment.content +
 			'</td>\
 			<td>\
-				<button data-dismiss="modal" data-toggle="modal" data-target="#reply-modal" \
-					id="'+comment.id+'" class="btn btn-primary btn-sm" onclick="fillInReply(\''+file.name+'\',\''+ escape(comment.content) +'\',this.id,\''+file.id+'\')">\
-				Reply</button>\
-			<button id="resolve-'+comment.id+'"  class="btn btn-primary btn-sm" onclick="markAsResolved(\''+comment.id+'\',\''+file.id+'\')"> Mark As Resolved</button>\
+			<i class="pull-left fa fa-reply" data-dismiss="modal" data-toggle="modal" data-target="#reply-modal" \
+					id="'+comment.id+'" onclick="fillInReply(\''+file.name+'\',\''+ escape(comment.content) +'\',this.id,\''+file.id+'\')">\
+			</i>\
+			<i id="resolve-'+comment.id+'" class="pull-left fa fa-trash" aria-hidden="true"></i>\
+			<i id="resolve-'+comment.id+'"  class="pull-left fa fa-check" onclick="markAsResolved(\''+comment.id+'\',\''+file.id+'\')" tooltip="Mark As Resolved"></i>\
 			</td>\
 			</tr>';
 	var table = $('.table-inbox').DataTable();

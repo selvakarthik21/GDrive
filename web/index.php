@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -20,9 +21,9 @@
 			<thead>
 				<tr>
 					<th style="width: 0%;"></th>
-					<th style="width: 10%;">Document</th>
-					<th style="width: 10%;">Created At</th>
-					<th style="width: 57%">Action Item Message</th>
+					<th style="width: 10%;">Name</th>
+					<th style="width: 10%;">Created On</th>
+					<th style="width: 57%">Action Item</th>
 					<th></th>
 				</tr>
 			</thead>
