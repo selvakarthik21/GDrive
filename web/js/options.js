@@ -391,7 +391,7 @@ function makeTableSortable(){
 	table.on( 'row-reorder', function ( e, diff, edit ) {
 		var messageOrder = [];
 		$('.table-inbox tbody tr').each(function(){
-			var replyBtnId = $(this).find('button[data-target="#reply-modal"]').attr('id');
+			var replyBtnId = $(this).find('[data-target="#reply-modal"]').attr('id');
 			messageOrder.push(replyBtnId);
 		});
 		updateMessageOrder(messageOrder);
