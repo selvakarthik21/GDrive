@@ -12,7 +12,7 @@ td.reorder{
 	text-align: left !important;
 }
 #loading-img {
-    background: url(img/Velocity.gif) center center no-repeat;
+    background: url(../img/Velocity.gif) center center no-repeat;
     height: 100%;
     z-index: 20;
 }
@@ -36,7 +36,7 @@ td.reorder{
     position: absolute;
 }
 .logo{
-	background: url(img/logo.png) no-repeat;
+	background: url(../img/logo.png) no-repeat;
     width: 100%;
     height: 60px;
     background-repeat: no-repeat;
