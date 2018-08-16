@@ -113,8 +113,8 @@ function appendPre(file, comment) {
 			<i class="icons fa fa-reply" data-dismiss="modal" data-toggle="modal" data-target="#reply-modal" \
 					id="'+comment.id+'" onclick="fillInReply(\''+file.name+'\',\''+ escape(comment.content) +'\',this.id,\''+file.id+'\')">\
 			</i>\
-			<i id="delete-'+comment.id+'"  class="icons fa fa-trash" onclick="deleteComment(\''+comment.id+'\',\''+file.id+'\')" tooltip="Mark As Resolved"></i>\
-			<i id="resolve-'+comment.id+'" class="icons fa fa-check" onclick="markAsResolved(\''+comment.id+'\',\''+file.id+'\')" tooltip="Mark As Resolved"></i>\
+			<i id="delete-'+comment.id+'"  class="icons fa fa-trash" onclick="showDeleteOrMarkAsResolvePopup(\''+comment.id+'\',\''+file.id+'\',\'delete\')" tooltip="Delete Comment"></i>\
+			<i id="resolve-'+comment.id+'" class="icons fa fa-check" onclick="showDeleteOrMarkAsResolvePopup(\''+comment.id+'\',\''+file.id+'\',\'markAsResolved\')" tooltip="Mark As Resolved"></i>\
 			</td>\
 			</tr>';
 	var table = $('.table-inbox').DataTable();
@@ -129,6 +129,45 @@ function appendPre(file, comment) {
 	}
 	
 }
+function showDeleteOrMarkAsResolvePopup(commentId, fileId, actionType){
+	if('delete' == actionType){
+		$('.deleteComment').removeClass('hidden');
+		$('.markAsResolved').addClass('hidden');
+	} else if('markAsResolved' == actionType){
+		$('.deleteComment').addClass('hidden');
+		$('.markAsResolved').removeClass('hidden');
+	}
+	if('delete' == actionType || 'markAsResolved' == actionType){
+		var commentContent = $('#'+commentId).closest('td').prev().text();
+		$('.commentContent').html(commentContent);
+		var $btn = $('#deleteOrMarkAsResolved-button');
+		$btn.attr('actionType', actionType);
+		$btn.attr('commentId', commentId);
+		$btn.attr('fileId', fileId);
+		$('#delete-modal').modal('show');
+	}
+}
+
+function deleteOrMarkAsResolved(){
+	var $btn = $('#deleteOrMarkAsResolved-button');
+	var actionType = $btn.attr('actionType');
+	var commentId = $btn.attr('commentId');
+	var fileId = $btn.attr('fileId');
+	switch (actionType) {
+	case 'delete':
+		deleteComment(commentId, fileId);
+		$('#delete-modal').modal('hide');
+		break;
+	case 'markAsResolved':
+		markAsResolved(commentId, fileId);
+		$('#delete-modal').modal('hide');
+		break;	
+	default:
+		$('#delete-modal').modal('hide');
+	break;
+	}
+	return false;
+}
 function deleteComment(commentId, fileId){
 	var sendRequest = gapi.client.drive.comments.delete({
 		'fileId' : fileId,
@@ -136,11 +175,9 @@ function deleteComment(commentId, fileId){
 	});
 	sendRequest.execute(function(response){
 		console.log(response);
-		if(response){
-			var $row = $('#delete-'+commentId).closest('tr');
-			$row.addClass('deleted');
-			var table = $('.table-inbox').DataTable();
-			table.row('.deleted').remove().draw( false );			
+		if(response.result){
+			$('#delete-modal').modal('hide');
+			listFiles();		
 		}		
 	});
 }
