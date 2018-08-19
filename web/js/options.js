@@ -110,6 +110,10 @@ function appendPre(file, comment) {
 			' + comment.content +
 			'</td>\
 			<td>\
+			<i class="icons fa fa-edit taskIcon"></i>\
+			<i class="icons fa fa-lightbulb keepIcon"></i>\
+			<i class="icons fa fa-thumbtack reminderIcon"></i>\
+			<i class="icons fa fa-calendar-alt calendarIcon"></i>\
 			<i class="icons fa fa-reply" data-dismiss="modal" data-toggle="modal" data-target="#reply-modal" \
 					id="'+comment.id+'" onclick="fillInReply(\''+file.name+'\',\''+ escape(comment.content) +'\',this.id,\''+file.id+'\')">\
 			</i>\
@@ -372,7 +376,7 @@ function makeTableSortable(){
 				<input type="date" placeholder="mm/dd/yyyy" id="date" max="'+currentDate+'" onkeydown="return false;" value="'+formattedDate+'">\
 			</label>';
         	if($('#date').length == 0){
-        		$('.dataTables_filter').append('<button id="refreshItem" onclick="listFiles();" class="btn btn-primary btn-sm" style="margin-left: 10px;">Refresh</button>');
+        		$('.dataTables_filter').append('<button id="refreshItem" onclick="listFiles();" class="btn btn-primary btn-sm" style="margin-left: 7px;">Refresh</button>');
         		$('.dataTable thead tr th:last').append(label);
         		$(signoutButtonHtml).appendTo($('.dataTables_filter'));
         		setTimeout(function(){
@@ -402,7 +406,7 @@ function makeTableSortable(){
 	    if(col_idx == 1 || col_idx == 2){
 	    	var messageOrder = [];
 			$('.table-inbox tbody tr').each(function(){
-				var replyBtnId = $(this).find('button[data-target="#reply-modal"]').attr('id');
+				var replyBtnId = $(this).find('[data-target="#reply-modal"]').attr('id');
 				messageOrder.push(replyBtnId);
 			});
 			updateMessageOrder(messageOrder);
