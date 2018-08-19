@@ -13,7 +13,7 @@ var authorizeButton = document.getElementById('authorize_button');
 var  signoutButton= document.getElementById('signout_button');
 var signoutButtonHtml = '<button id="signout_button" class="btn btn-sm btn-danger" style="margin-left:10px;">Sign Out</button>';
 var firstTimeLoad = true;
-$(document).on('.googleIcons', 'click', function(){
+$(document).on('click', '.googleIcons', function(){
 	var isActive = $(this).hasClass('active');
 	if(isActive){
 		$(this).removeClass('active');
