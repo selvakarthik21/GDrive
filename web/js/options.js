@@ -13,6 +13,14 @@ var authorizeButton = document.getElementById('authorize_button');
 var  signoutButton= document.getElementById('signout_button');
 var signoutButtonHtml = '<button id="signout_button" class="btn btn-sm btn-danger" style="margin-left:10px;">Sign Out</button>';
 var firstTimeLoad = true;
+$(document).on('.googleIcons', 'click', function(){
+	var isActive = $(this).hasClass('active');
+	if(isActive){
+		$(this).removeClass('active');
+	} else {
+		$(this).addClass('active');
+	}
+})
 /**
  *  On load, called to load the auth2 library and API client library.
  */
@@ -110,10 +118,10 @@ function appendPre(file, comment) {
 			' + comment.content +
 			'</td>\
 			<td>\
-			<i class="icons fa fa-edit taskIcon"></i>\
-			<i class="icons fa fa-lightbulb keepIcon"></i>\
-			<i class="icons fa fa-thumbtack reminderIcon"></i>\
-			<i class="icons fa fa-calendar-alt calendarIcon"></i>\
+			<i class="icons fa fa-edit taskIcon googleIcons" title="Google Task"></i>\
+			<i class="icons fa fa-lightbulb keepIcon googleIcons" title="Google Keep"></i>\
+			<i class="icons fa fa-thumbtack reminderIcon googleIcons" title="Google Remainder"></i>\
+			<i class="icons fa fa-calendar-alt calendarIcon googleIcons" title="Google Calendar"></i>\
 			<i class="icons fa fa-reply" data-dismiss="modal" data-toggle="modal" data-target="#reply-modal" \
 					id="'+comment.id+'" onclick="fillInReply(\''+file.name+'\',\''+ escape(comment.content) +'\',this.id,\''+file.id+'\')">\
 			</i>\
