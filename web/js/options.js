@@ -9,7 +9,7 @@ var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/res
 var loggedInUser;
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
-var SCOPES = 'https://www.googleapis.com/auth/drive profile email ';
+var SCOPES = 'https://www.googleapis.com/auth/drive profile email https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/tasks';
 var messagesList = [];
 var authorizeButton = document.getElementById('authorize_button');
 var  signoutButton= document.getElementById('signout_button');
@@ -89,7 +89,7 @@ function createTaskOrEvent(){
 		$('#datetimepicker input').css({'borderColor':'none'});
 		var sendRequest;
 		if('Task' == iconType){
-			sendRequest = gapi.client.tasks.task.insert({
+			sendRequest = gapi.client.tasks.insert({
 				'tasklist' : '@default',
 				'title': fileName,
 				'notes': content,
@@ -212,7 +212,7 @@ function appendPre(file, comment) {
 		url = 'https://drive.google.com/file/d/'+file.id +'/edit';
 	}
 	var index = getMessageIndex(comment.id);
-	var messageRelatedActionDetails = messagesList[index];
+	var messageRelatedActionDetails = messagesList[index] || {};
 	var eventText = messageRelatedActionDetails.eventText || "";
 	var reminderText = messageRelatedActionDetails.reminderText || "";
 	var keepText = messageRelatedActionDetails.keepText || "";
