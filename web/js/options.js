@@ -47,6 +47,18 @@ $(document).on('click', '.googleIcons', function(){
 			$("#datePickerSelectionDiv").show();
 			$('#icon-active-modal-submit-btn').text("Create "+iconType);	
 		}
+		if(0 == messagesList.length){
+			var messageOrder = [];
+			$('.table-inbox tbody tr').each(function(){
+				var replyBtnId = $(this).attr('id');
+				replyBtnId = replyBtnId.replace(/row-/gi,'');
+				var obj = {
+						id : replyBtnId
+				}
+				messageOrder.push(obj);
+			});
+			updateMessageOrder(messageOrder);
+		}
 		
 	}
 	$('#icon-active-modal').modal('show');
@@ -248,9 +260,9 @@ function appendPre(file, comment) {
 			<span class="commentText" >' + comment.content +'</span><br/>'+contentSuffixText+'\
 			</td>\
 			<td>\
-			<i class="icons fa fa-edit taskIcon googleIcons '+eventActive+'" title="Google Task" data-icon="Task" data-id="'+taskId+'"></i>\
-			<i class="icons fa fa-lightbulb keepIcon googleIcons '+eventActive+'" title="Google Keep" data-icon="Notes" data-id="'+keepId+'"></i>\
-			<i class="icons fa fa-thumbtack reminderIcon googleIcons '+eventActive+'" title="Google Reminder" data-icon="Reminder" data-id="'+reminderId+'" data-reminder-date="'+reminderDate+'"></i>\
+			<i class="icons fa fa-edit taskIcon googleIcons '+taskActive+'" title="Google Task" data-icon="Task" data-id="'+taskId+'"></i>\
+			<i class="icons fa fa-lightbulb keepIcon googleIcons '+keepActive+'" title="Google Keep" data-icon="Notes" data-id="'+keepId+'"></i>\
+			<i class="icons fa fa-thumbtack reminderIcon googleIcons '+reminderActive+'" title="Google Reminder" data-icon="Reminder" data-id="'+reminderId+'" data-reminder-date="'+reminderDate+'"></i>\
 			<i class="icons fa fa-calendar-alt calendarIcon googleIcons '+eventActive+'" title="Google Calendar" data-icon="Event" data-id="'+eventId+'" data-event-date="'+eventDate+'"></i>\
 			<i class="icons fa fa-reply" data-dismiss="modal" data-toggle="modal" data-target="#reply-modal" \
 					id="'+comment.id+'" onclick="fillInReply(\''+file.name+'\',\''+ escape(comment.content) +'\',this.id,\''+file.id+'\')">\
@@ -442,20 +454,6 @@ function loadAllFiles(files){
 					if(index+1 == files.length){
 						//console.log('Last Item loaded');
 						$('.overlay').hide();
-						setTimeout(function(){
-							if(0 == messagesList.length){
-								var messageOrder = [];
-								$('.table-inbox tbody tr').each(function(){
-									var replyBtnId = $(this).attr('id');
-									replyBtnId = replyBtnId.replace(/row-/gi,'');
-									var obj = {
-											id : replyBtnId
-									}
-									messageOrder.push(obj);
-								});
-								updateMessageOrder(messageOrder);
-							}
-						});
 					}
 				}, i * 200);
 			})(i);
