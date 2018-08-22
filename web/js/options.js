@@ -273,13 +273,13 @@ function appendPre(file, comment) {
 	var newRow = '<tr id="row-'+comment.id+'">\
 			<td>'+index+'</td>\
 			<td><a target="_blank" href="'+url+'">'+file.name + '</a></td>\
-			<td>'+(comment.createdTime).toLocaleString()+'</td>\
+			<td>'+new Date(comment.createdTime).toLocaleString()+'</td>\
 			<td>\
 			<span class="commentText" >' + comment.content +'</span><br/>'+contentSuffixText+'\
 			</td>\
 			<td>\
 			<i class="icons fa fa-edit taskIcon googleIcons '+taskActive+'" title="Google Task" data-icon="Task" data-id="'+taskId+'" data-task-date="'+taskDate+'"></i>\
-			<i class="icons fa fa-lightbulb keepIcon googleIcons '+keepActive+'" title="Google Keep" data-icon="Notes" data-id="'+keepId+'"></i>\
+			<i class="icons fa fa-lightbulb keepIcon googleIcons '+keepActive+'" title="Google Keep" data-icon="Notes" data-id="'+keepId+'" style="display:none;"></i>\
 			<i class="icons fa fa-thumbtack reminderIcon googleIcons '+reminderActive+'" title="Google Reminder" data-icon="Reminder" data-id="'+reminderId+'" data-reminder-date="'+reminderDate+'"></i>\
 			<i class="icons fa fa-calendar-alt calendarIcon googleIcons '+eventActive+'" title="Google Calendar" data-icon="Event" data-id="'+eventId+'" data-event-date="'+eventDate+'"></i>\
 			<i class="icons fa fa-reply" data-dismiss="modal" data-toggle="modal" data-target="#reply-modal" \
