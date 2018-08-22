@@ -89,7 +89,7 @@ function createTaskOrEvent(){
 		$('#datetimepicker input').css({'borderColor':'none'});
 		var sendRequest;
 		if('Task' == iconType){
-			sendRequest = gapi.client.tasks.insert({
+			sendRequest = gapi.client.tasks.tasks.insert({
 				'tasklist' : '@default',
 				'title': fileName,
 				'notes': content,
