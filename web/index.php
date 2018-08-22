@@ -122,6 +122,9 @@
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
+                                <div class='input-group date' id='taskDate' style="display: none;">
+                                    <input type='date' class="form-control" />
+                                </div>
                             </div>
                         </div>
 					</div>

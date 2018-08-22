@@ -28,7 +28,16 @@ $(document).on('click', '.googleIcons', function(){
 	var commentContent = $('#row-'+commentId).find('.commentText').text();
 	$('.commentContent').html(prefixText +" : " + commentContent);
 	var fileName = $('#row-'+commentId).find('td:first a').text();
-	$('#datetimepicker input').css({'borderColor':'none'});
+	$('#datetimepicker input, #taskDate').css({'borderColor':'none'});
+	var selectedDate = $(this).attr('data-'+iconType+'-date') || "";
+	if('Task' == iconType){
+		$('#datetimepicker').hide();		
+		$('#taskDate').show().val(selectedDate);
+	} else {
+		$('#datetimepicker input').val(selectedDate);
+		$('#datetimepicker').show();
+		$('#taskDate').hide();
+	}
 	if(isActive){
 		var id = $(this).attr('data-id');
 		$('#icon-active-modal-submit-btn').hide();
@@ -96,7 +105,13 @@ function createTaskOrEvent(){
 	var fileName = $('#icon-active-modal-submit-btn').attr('data-fileName');
 	if('Task' == iconType || 'Event' == iconType || 'Reminder' == iconType){
 		var selectedDate = $('#datetimepicker input').val();
-		if(new Date(selectedDate) == 'Invalid Date'){
+		var taskDate = $('#taskDate').val();
+		if('Task' == iconType){
+			if(new Date(taskDate) == 'Invalid Date'){
+				$('#taskDate').css({'borderColor':'red'});
+				return;
+			}
+		} else if(new Date(selectedDate) == 'Invalid Date'){
 			$('#datetimepicker input').css({'borderColor':'red'});
 			return;
 		}
@@ -107,17 +122,17 @@ function createTaskOrEvent(){
 				'tasklist' : '@default',
 				'title': fileName,
 				'notes': content,
-				'due' : (new Date( (new Date(selectedDate)).getTime()+tzoffset)).toISOString() 
+				'due' : (new Date( (new Date(taskDate)).getTime()+tzoffset)).toISOString() 
 			});
 		} else if('Reminder' == iconType || 'Event' == iconType){
 			var event = {
 					'summary': fileName,
 					'description': content,
 					'start': {
-						'dateTime': (new Date( (new Date(selectedDate)).getTime()+tzoffset)).toISOString() 
+						'dateTime': (new Date(selectedDate)).toISOString() 
 					},
 					'end': {
-						'dateTime': (new Date( (new Date(selectedDate)).getTime()+tzoffset)).toISOString() 
+						'dateTime': (new Date(selectedDate)).toISOString() 
 					}
 			}
 			if('Reminder' == iconType){
@@ -140,11 +155,11 @@ function createTaskOrEvent(){
 				var commentId = $('#icon-active-modal-submit-btn').attr('data-commentId');
 				var index = getMessageIndex(commentId);
 				var messageRelatedActionDetails = messagesList[index];
-				
 				if('Task' == iconType){
 					var date = new Date(response.due);
+					date = formateDateToHTML5Date(date);
 					messageRelatedActionDetails.taskId = response.id;
-					messageRelatedActionDetails.taskText = '<span style="color: #337ab7;"><b> Task : </b>'+(date.toLocaleString())+'</span>';
+					messageRelatedActionDetails.taskText = '<span style="color: #337ab7;"><b> Task : </b>'+(date)+'</span>';
 				}else if('Reminder' == iconType){
 					messageRelatedActionDetails.reminderId = response.id;
 					var date = new Date(response.start.dateTime);
@@ -249,7 +264,7 @@ function appendPre(file, comment) {
 	reminderActive =  ($.trim(reminderId) == "") ? "" : " active ", 
 	keepActive =  ($.trim(keepId) == "") ? "" : " active ", 
 	taskActive =  ($.trim(taskId) == "") ? "" : " active ";
-	
+	var taskDate = messageRelatedActionDetails.taskDate || ""
 	var reminderDate = messageRelatedActionDetails.reminderDate || "";
 	var eventDate = messageRelatedActionDetails.eventDate || "";
 	var newRow = '<tr id="row-'+comment.id+'">\
@@ -260,7 +275,7 @@ function appendPre(file, comment) {
 			<span class="commentText" >' + comment.content +'</span><br/>'+contentSuffixText+'\
 			</td>\
 			<td>\
-			<i class="icons fa fa-edit taskIcon googleIcons '+taskActive+'" title="Google Task" data-icon="Task" data-id="'+taskId+'"></i>\
+			<i class="icons fa fa-edit taskIcon googleIcons '+taskActive+'" title="Google Task" data-icon="Task" data-id="'+taskId+'" data-task-date="'+taskDate+'"></i>\
 			<i class="icons fa fa-lightbulb keepIcon googleIcons '+keepActive+'" title="Google Keep" data-icon="Notes" data-id="'+keepId+'"></i>\
 			<i class="icons fa fa-thumbtack reminderIcon googleIcons '+reminderActive+'" title="Google Reminder" data-icon="Reminder" data-id="'+reminderId+'" data-reminder-date="'+reminderDate+'"></i>\
 			<i class="icons fa fa-calendar-alt calendarIcon googleIcons '+eventActive+'" title="Google Calendar" data-icon="Event" data-id="'+eventId+'" data-event-date="'+eventDate+'"></i>\
