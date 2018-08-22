@@ -32,6 +32,8 @@ $(document).on('click', '.googleIcons', function(){
 	var selectedDate = $(this).attr('data-'+iconType+'-date') || "";
 	$("#datePickerSelectionDiv").show();
 	if('Task' == iconType){
+		selectedDate = new Date(selectedDate);
+		selectedDate = formateDateToHTML5Date(selectedDate);
 		$('#datetimepicker').hide();		
 		$('#taskDate').show()
 		$('#taskDate input').val(selectedDate);
@@ -44,6 +46,7 @@ $(document).on('click', '.googleIcons', function(){
 		var id = $(this).attr('data-id');
 		$('#icon-active-modal-submit-btn').hide();
 	} else {
+		$('#icon-active-modal-submit-btn').show();
 		$('#icon-active-modal-submit-btn').attr('data-icon', iconType);
 		$('#icon-active-modal-submit-btn').attr('data-text', commentContent);
 		$('#icon-active-modal-submit-btn').attr('data-fileName', fileName);
