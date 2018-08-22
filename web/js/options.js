@@ -158,9 +158,10 @@ function createTaskOrEvent(){
 				var messageRelatedActionDetails = messagesList[index];
 				if('Task' == iconType){
 					var date = new Date(response.due);
-					date = formateDateToHTML5Date(date);
+					date = formateDateToMMDDYYYY(date);
 					messageRelatedActionDetails.taskId = response.id;
 					messageRelatedActionDetails.taskText = '<span style="color: #337ab7;"><b> Task : </b>'+(date)+'</span>';
+					messageRelatedActionDetails.taskDate = date;
 				}else if('Reminder' == iconType){
 					messageRelatedActionDetails.reminderId = response.id;
 					var date = new Date(response.start.dateTime);
@@ -271,7 +272,7 @@ function appendPre(file, comment) {
 	var newRow = '<tr id="row-'+comment.id+'">\
 			<td>'+index+'</td>\
 			<td><a target="_blank" href="'+url+'">'+file.name + '</a></td>\
-			<td>'+formatDate(comment.createdTime)+'</td>\
+			<td>'+(comment.createdTime).toLocaleString()+'</td>\
 			<td>\
 			<span class="commentText" >' + comment.content +'</span><br/>'+contentSuffixText+'\
 			</td>\
@@ -616,6 +617,21 @@ function formateDateToHTML5Date(d){
 	var formattedDate = year+"-"+month+"-"+date;
 	return formattedDate;
 }
+
+function formateDateToMMDDYYYY(d){
+	var year = d.getFullYear();
+	var month = d.getMonth() +1;
+	if(month < 10){
+		month = "0"+month;
+	}
+	var date = d.getDate();
+	if(date < 10){
+		date = "0"+date;
+	}
+	var formattedDate = month+"/"+date+"/"+year;
+	return formattedDate;
+}
+
 function formatDate(date){
 	var text = '';
 	try{
