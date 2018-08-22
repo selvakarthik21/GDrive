@@ -28,11 +28,12 @@ $(document).on('click', '.googleIcons', function(){
 	var commentContent = $('#row-'+commentId).find('.commentText').text();
 	$('.commentContent').html(prefixText +" : " + commentContent);
 	var fileName = $('#row-'+commentId).find('td:first a').text();
-	$('#datetimepicker input, #taskDate').css({'borderColor':'none'});
+	$('#datetimepicker input, #taskDate input').css({'borderColor':'none'});
 	var selectedDate = $(this).attr('data-'+iconType+'-date') || "";
 	if('Task' == iconType){
 		$('#datetimepicker').hide();		
-		$('#taskDate').show().val(selectedDate);
+		$('#taskDate').show()
+		$('#taskDate input').val(selectedDate);
 	} else {
 		$('#datetimepicker input').val(selectedDate);
 		$('#datetimepicker').show();
@@ -105,10 +106,10 @@ function createTaskOrEvent(){
 	var fileName = $('#icon-active-modal-submit-btn').attr('data-fileName');
 	if('Task' == iconType || 'Event' == iconType || 'Reminder' == iconType){
 		var selectedDate = $('#datetimepicker input').val();
-		var taskDate = $('#taskDate').val();
+		var taskDate = $('#taskDate input').val();
 		if('Task' == iconType){
 			if(new Date(taskDate) == 'Invalid Date'){
-				$('#taskDate').css({'borderColor':'red'});
+				$('#taskDate input').css({'borderColor':'red'});
 				return false;
 			}
 		} else if(new Date(selectedDate) == 'Invalid Date'){
