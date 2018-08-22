@@ -434,6 +434,20 @@ function loadAllFiles(files){
 					if(index+1 == files.length){
 						//console.log('Last Item loaded');
 						$('.overlay').hide();
+						setTimeout(function(){
+							if(0 == messagesList.length){
+								var messageOrder = [];
+								$('.table-inbox tbody tr').each(function(){
+									var replyBtnId = $(this).attr('id');
+									replyBtnId = replyBtnId.replace(/row-/gi,'');
+									var obj = {
+											id : replyBtnId
+									}
+									messageOrder.push(obj);
+								});
+								updateMessageOrder(messageOrder);
+							}
+						});
 					}
 				}, i * 200);
 			})(i);
