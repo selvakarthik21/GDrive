@@ -3,11 +3,17 @@ var CLIENT_ID = '453486582246-qr4dr1lbclp9149pead96tbtetuvcduj.apps.googleuserco
 var API_KEY = 'AIzaSyBPUJKB5QecgWwtdU4CmX9SrDnXpf0V3w8';
 var daysDiff = 90*24*60*60*1000;
 // Array of API discovery doc URLs for APIs used by the quickstart
-var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest",
+	"https://www.googleapis.com/discovery/v1/apis/tasks/v1/rest",
+	"https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 var loggedInUser;
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
-var SCOPES = 'https://www.googleapis.com/auth/drive profile email';
+var SCOPES = 'https://www.googleapis.com/auth/drive \
+	profile \
+	email \
+	https://www.googleapis.com/auth/tasks \
+	https://www.googleapis.com/auth/calendar';
 var messagesList = [];
 var authorizeButton = document.getElementById('authorize_button');
 var  signoutButton= document.getElementById('signout_button');
@@ -15,11 +21,37 @@ var signoutButtonHtml = '<button id="signout_button" class="btn btn-sm btn-dange
 var firstTimeLoad = true;
 $(document).on('click', '.googleIcons', function(){
 	var isActive = $(this).hasClass('active');
+	var iconType = $(this).attr('data-icon');
+	var title = $(this).attr('title');
+	$('#icon-active-modal .modal-title').text(title);
+	var prefixText = $(this).attr('data-icon');
+	var commentId = $(this).closest('tr').attr('id');
+	commentId = commentId.replace('row-','');
+	var commentContent = $('#row-'+commentId).find('.commentText').text();
+	$('.commentContent').html(prefixText +" : " + commentContent);
+	var fileName = $('#row-'+commentId).find('td:first a').text();
+	$('#datetimepicker input').css({'borderColor':'none'});
 	if(isActive){
-		$(this).removeClass('active');
+		var id = $(this).attr('data-id');
+		$('#icon-active-modal-submit-btn').hide();
 	} else {
 		$(this).addClass('active');
+		$('#icon-active-modal-submit-btn').attr('data-icon', iconType);
+		$('#icon-active-modal-submit-btn').attr('data-text', commentContent);
+		$('#icon-active-modal-submit-btn').attr('data-fileName', fileName);
+		$('#icon-active-modal-submit-btn').attr('data-commentId', commentId);
+		$("#datePickerSelectionDiv").hide();
+		$('#datetimepicker > span').click();
+		setTimeout(function(){
+			$('#datetimepicker > span').click();
+		},1);
+		if('Task' == iconType || 'Event' == iconType || 'Reminder' == iconType){
+			$("#datePickerSelectionDiv").show();
+			$('#icon-active-modal-submit-btn').text("Create "+iconType);	
+		}
+		
 	}
+	$('#icon-active-modal').modal('show');
 })
 /**
  *  On load, called to load the auth2 library and API client library.
@@ -48,7 +80,81 @@ function initClient() {
 		//signoutButton.onclick = handleSignoutClick;
 	});
 }
-
+function createTaskOrEvent(){
+	var iconType = $('#icon-active-modal-submit-btn').attr('data-icon');
+	var content  = $('#icon-active-modal-submit-btn').attr('data-text');
+	var fileName = $('#icon-active-modal-submit-btn').attr('data-fileName');
+	if('Task' == iconType || 'Event' == iconType || 'Reminder' == iconType){
+		var selectedDate = $('#datetimepicker input').val();
+		if(new Date(selectedDate) == 'Invalid Date'){
+			$('#datetimepicker input').css({'borderColor':'red'});
+			return;
+		}
+		$('#datetimepicker input').css({'borderColor':'none'});
+		var sendRequest;
+		if('Task' == iconType){
+			sendRequest = gapi.client.tasks.task.insert({
+				'tasklist' : '@default',
+				'title': fileName,
+				'notes': content,
+				'due' : (new Date(selectedDate)).toISOString() 
+			});
+		} else if('Reminder' == iconType || 'Event' == iconType){
+			var event = {
+					'summary': fileName,
+					'description': content,
+					'start': {
+						'dateTime': (new Date(selectedDate)).toISOString() 
+					},
+					'end': {
+						'dateTime': (new Date(selectedDate)).toISOString() 
+					}
+			}
+			if('Reminder' == iconType){
+				event['reminders'] = {
+						'useDefault': false,
+						'overrides': [
+							{'method': 'email', 'minutes': 0},
+							{'method': 'popup', 'minutes': 0},
+							{'method': 'sms', 'minutes': 0}
+						]
+				}
+			}
+			sendRequest = gapi.client.calendar.events.insert({
+				'calendarId': 'primary',
+				'resource': event
+			});
+		}
+		sendRequest.execute(function(response){
+			if(response.id){
+				var commentId = $('#icon-active-modal-submit-btn').attr('data-commentId');
+				var index = getMessageIndex(commentId);
+				var messageRelatedActionDetails = messagesList[index];
+				if('Task' == iconType){
+					var date = new Date(response.due);
+					messageRelatedActionDetails.taskText = '<span style="color: #337ab7;"><b> Task : </b>'+(date.toLocaleString())+'</span>';
+				}else if('Reminder' == iconType){
+					var date = new Date(response.start.dateTime);
+					messageRelatedActionDetails.taskText = '<span style="color: #337ab7;"><b> Reminder : </b>'+(date.toLocaleString())+'</span>';
+				}else if('Event' == iconType){
+					var date = new Date(response.start.dateTime);
+					messageRelatedActionDetails.taskText = '<span style="color: #337ab7;"><b> Event : </b>'+(date.toLocaleString())+'</span>';
+				}
+				messagesList[index] = messageRelatedActionDetails;
+				updateMessageOrder(messagesList);
+				setTimeout(function(){
+					listFiles();
+				}, 1000);
+			}
+			setTimeout(function(){
+				$("#icon-active-modal").modal('hide');
+			}, 2000);
+		});
+	} else {
+		$("#icon-active-modal").modal('hide');
+	}
+	return false;
+}
 /**
  *  Called when the signed in status changes, to update the UI
  *  appropriately. After a sign-in, the API is called.
@@ -110,18 +216,38 @@ function appendPre(file, comment) {
 		url = 'https://drive.google.com/file/d/'+file.id +'/edit';
 	}
 	var index = getMessageIndex(comment.id);
-	var newRow = '<tr>\
+	var messageRelatedActionDetails = messagesList[index];
+	var eventText = messageRelatedActionDetails.eventText || "";
+	var reminderText = messageRelatedActionDetails.reminderText || "";
+	var keepText = messageRelatedActionDetails.keepText || "";
+	var taskText = messageRelatedActionDetails.taskText || "";
+	
+	var contentSuffixText = eventText+reminderText+keepText+taskText;
+	
+	var eventId = messageRelatedActionDetails.eventId || "";
+	var reminderId = messageRelatedActionDetails.reminderId || "";
+	var keepId = messageRelatedActionDetails.keepId || "";
+	var taskId = messageRelatedActionDetails.taskId || "";
+	
+	var eventActive = ($.trim(eventId) == "") ? "" : " active ", 
+	reminderActive =  ($.trim(reminderId) == "") ? "" : " active ", 
+	keepActive =  ($.trim(keepId) == "") ? "" : " active ", 
+	taskActive =  ($.trim(taskId) == "") ? "" : " active ";
+	
+	var reminderDate = messageRelatedActionDetails.reminderDate || "";
+	var eventDate = messageRelatedActionDetails.eventDate || "";
+	var newRow = '<tr id="row-'+comment.id+'">\
 			<td>'+index+'</td>\
 			<td><a target="_blank" href="'+url+'">'+file.name + '</a></td>\
 			<td>'+formatDate(comment.createdTime)+'</td>\
 			<td>\
-			' + comment.content +
+			<span class="commentText" >' + comment.content +'</span><br/>'+contentSuffixText
 			'</td>\
 			<td>\
-			<i class="icons fa fa-edit taskIcon googleIcons" title="Google Task"></i>\
-			<i class="icons fa fa-lightbulb keepIcon googleIcons" title="Google Keep"></i>\
-			<i class="icons fa fa-thumbtack reminderIcon googleIcons" title="Google Remainder"></i>\
-			<i class="icons fa fa-calendar-alt calendarIcon googleIcons" title="Google Calendar"></i>\
+			<i class="icons fa fa-edit taskIcon googleIcons '+eventActive+'" title="Google Task" data-icon="Task" data-id="'+taskId+'"></i>\
+			<i class="icons fa fa-lightbulb keepIcon googleIcons '+eventActive+'" title="Google Keep" data-icon="Notes" data-id="'+keepId+'"></i>\
+			<i class="icons fa fa-thumbtack reminderIcon googleIcons '+eventActive+'" title="Google Reminder" data-icon="Reminder" data-id="'+reminderId+'" data-reminder-date="'+reminderDate+'"></i>\
+			<i class="icons fa fa-calendar-alt calendarIcon googleIcons '+eventActive+'" title="Google Calendar" data-icon="Event" data-id="'+eventId+'" data-event-date="'+eventDate+'"></i>\
 			<i class="icons fa fa-reply" data-dismiss="modal" data-toggle="modal" data-target="#reply-modal" \
 					id="'+comment.id+'" onclick="fillInReply(\''+file.name+'\',\''+ escape(comment.content) +'\',this.id,\''+file.id+'\')">\
 			</i>\
@@ -141,6 +267,7 @@ function appendPre(file, comment) {
 	}
 	
 }
+
 function showDeleteOrMarkAsResolvePopup(commentId, fileId, actionType){
 	if('delete' == actionType){
 		$('.deleteComment').removeClass('hidden');
@@ -150,7 +277,7 @@ function showDeleteOrMarkAsResolvePopup(commentId, fileId, actionType){
 		$('.markAsResolved').removeClass('hidden');
 	}
 	if('delete' == actionType || 'markAsResolved' == actionType){
-		var commentContent = $('#'+commentId).closest('td').prev().text();
+		var commentContent = $('#row-'+commentId).find('.commentText').text();
 		$('.commentContent').html(commentContent);
 		var $btn = $('#deleteOrMarkAsResolved-button');
 		$btn.attr('actionType', actionType);
@@ -356,6 +483,7 @@ function listAllComments(file){
 }
 function makeTableSortable(){
 	try{
+		$('#datetimepicker').datetimepicker();
 		$('.table-inbox').DataTable().clear().draw();
 		$('.table-inbox').DataTable().destroy();
 	}catch(e){
@@ -403,8 +531,12 @@ function makeTableSortable(){
 	table.on( 'row-reorder', function ( e, diff, edit ) {
 		var messageOrder = [];
 		$('.table-inbox tbody tr').each(function(){
-			var replyBtnId = $(this).find('[data-target="#reply-modal"]').attr('id');
-			messageOrder.push(replyBtnId);
+			var replyBtnId = $(this).attr('id');
+			replyBtnId = replyBtnId.replace(/row-/gi,'');
+			var obj = {
+					id : replyBtnId
+			}
+			messageOrder.push(obj);
 		});
 		updateMessageOrder(messageOrder);
     } );
@@ -414,8 +546,12 @@ function makeTableSortable(){
 	    if(col_idx == 1 || col_idx == 2){
 	    	var messageOrder = [];
 			$('.table-inbox tbody tr').each(function(){
-				var replyBtnId = $(this).find('[data-target="#reply-modal"]').attr('id');
-				messageOrder.push(replyBtnId);
+				var replyBtnId = $(this).attr('id');
+				replyBtnId = replyBtnId.replace(/row-/gi,'');
+				var obj = {
+						id : replyBtnId
+				}
+				messageOrder.push(obj);
 			});
 			updateMessageOrder(messageOrder);
 	    }
@@ -425,7 +561,14 @@ function updateMessageOrder(messageOrder){
 	messagesList = messageOrder;
 }
 function getMessageIndex(messageId){
-	var idx = (messagesList.indexOf(messageId) > -1)  ? messagesList.indexOf(messageId) : 999999999999;	
+	var index = -1;
+	for(var i = 0; i < messagesList.length; i++){
+		if(messageId == messagesList[i].id){
+			index = i; 
+			break;
+		}
+	}
+	var idx = (index > -1)  ? index : 999999999999;	
 	return idx;
 }
 function formateDateToHTML5Date(d){
