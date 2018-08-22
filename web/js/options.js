@@ -166,12 +166,12 @@ function createTaskOrEvent(){
 				}else if('Reminder' == iconType){
 					messageRelatedActionDetails.reminderId = response.id;
 					var date = new Date(response.start.dateTime);
-					messageRelatedActionDetails.taskText = '<span style="color: #337ab7;"><b> Reminder : </b>'+(date.toLocaleString())+'</span>';
+					messageRelatedActionDetails.reminderText = '<span style="color: #337ab7;"><b> Reminder : </b>'+(date.toLocaleString())+'</span>';
 					messageRelatedActionDetails.reminderDate = (date.toLocaleString());
 				}else if('Event' == iconType){
 					var date = new Date(response.start.dateTime);
 					messageRelatedActionDetails.eventId = response.id;
-					messageRelatedActionDetails.taskText = '<span style="color: #337ab7;"><b> Event : </b>'+(date.toLocaleString())+'</span>';
+					messageRelatedActionDetails.eventText = '<span style="color: #337ab7;"><b> Event : </b>'+(date.toLocaleString())+'</span>';
 					messageRelatedActionDetails.eventDate = (date.toLocaleString());
 				}
 				messagesList[index] = messageRelatedActionDetails;
