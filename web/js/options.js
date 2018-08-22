@@ -30,6 +30,7 @@ $(document).on('click', '.googleIcons', function(){
 	var fileName = $('#row-'+commentId).find('td:first a').text();
 	$('#datetimepicker input, #taskDate input').css({'borderColor':'none'});
 	var selectedDate = $(this).attr('data-'+iconType+'-date') || "";
+	$("#datePickerSelectionDiv").show();
 	if('Task' == iconType){
 		$('#datetimepicker').hide();		
 		$('#taskDate').show()
@@ -43,18 +44,15 @@ $(document).on('click', '.googleIcons', function(){
 		var id = $(this).attr('data-id');
 		$('#icon-active-modal-submit-btn').hide();
 	} else {
-		$(this).addClass('active');
 		$('#icon-active-modal-submit-btn').attr('data-icon', iconType);
 		$('#icon-active-modal-submit-btn').attr('data-text', commentContent);
 		$('#icon-active-modal-submit-btn').attr('data-fileName', fileName);
 		$('#icon-active-modal-submit-btn').attr('data-commentId', commentId);
-		$("#datePickerSelectionDiv").hide();
 		$('#datetimepicker > span').click();
 		setTimeout(function(){
 			$('#datetimepicker > span').click();
 		},1);
 		if('Task' == iconType || 'Event' == iconType || 'Reminder' == iconType){
-			$("#datePickerSelectionDiv").show();
 			$('#icon-active-modal-submit-btn').text("Create "+iconType);	
 		}
 		if(0 == messagesList.length){
