@@ -50,6 +50,7 @@ td.reorder{
 }
 .dataTable th:last-child {
     padding-right: 0px;
+    padding-left: 0px;
 }
 .dataTable > tbody > tr > td:last-child{
     padding-right: 0px !important;
@@ -61,7 +62,7 @@ td.reorder{
     width: 234px !important;
 }
 i.icons {
-    margin-right: 10px;
+    margin-right: 14px;
     font-size: 16px;
     cursor: pointer;
     margin-top: 10px;

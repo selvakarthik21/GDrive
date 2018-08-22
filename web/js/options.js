@@ -126,15 +126,24 @@ function createTaskOrEvent(){
 				var commentId = $('#icon-active-modal-submit-btn').attr('data-commentId');
 				var index = getMessageIndex(commentId);
 				var messageRelatedActionDetails = messagesList[index];
+				var tzoffset = (new Date()).getTimezoneOffset() * 60000;
 				if('Task' == iconType){
 					var date = new Date(response.due);
+					date = new Date(date.getTime()-tzoffset);
+					messageRelatedActionDetails.taskId = response.id;
 					messageRelatedActionDetails.taskText = '<span style="color: #337ab7;"><b> Task : </b>'+(date.toLocaleString())+'</span>';
 				}else if('Reminder' == iconType){
+					messageRelatedActionDetails.reminderId = response.id;
 					var date = new Date(response.start.dateTime);
+					date = new Date(date.getTime()-tzoffset);
 					messageRelatedActionDetails.taskText = '<span style="color: #337ab7;"><b> Reminder : </b>'+(date.toLocaleString())+'</span>';
+					messageRelatedActionDetails.reminderDate = (date.toLocaleString());
 				}else if('Event' == iconType){
 					var date = new Date(response.start.dateTime);
+					date = new Date(date.getTime()-tzoffset);
+					messageRelatedActionDetails.eventId = response.id;
 					messageRelatedActionDetails.taskText = '<span style="color: #337ab7;"><b> Event : </b>'+(date.toLocaleString())+'</span>';
+					messageRelatedActionDetails.eventDate = (date.toLocaleString());
 				}
 				messagesList[index] = messageRelatedActionDetails;
 				updateMessageOrder(messagesList);
