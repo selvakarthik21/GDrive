@@ -10,8 +10,7 @@ var loggedInUser;
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
 var SCOPES = 'https://www.googleapis.com/auth/drive \
-	profile \
-	email \
+	https://www.googleapis.com/auth/userinfo \
 	https://www.googleapis.com/auth/tasks \
 	https://www.googleapis.com/auth/calendar';
 var messagesList = [];
