@@ -159,7 +159,7 @@ function createTaskOrEvent(){
 				var messageRelatedActionDetails = messagesList[index];
 				if('Task' == iconType){
 					var date = new Date(response.due);
-					date = formateDateToMMDDYYYY(date);
+					date = formateDateToMMDDYYYY(date, false);
 					messageRelatedActionDetails.taskId = response.id;
 					messageRelatedActionDetails.taskText = '<span style="color: #337ab7;"><b> Task : </b>'+(date)+'</span>';
 					messageRelatedActionDetails.taskDate = date;
@@ -623,14 +623,14 @@ function formateDateToHTML5Date(d){
 	return formattedDate;
 }
 
-function formateDateToMMDDYYYY(d){
+function formateDateToMMDDYYYY(d, isPrefixNeeded){
 	var year = d.getFullYear();
 	var month = d.getMonth() +1;
-	if(month < 10){
+	if(month < 10 && isPrefixNeeded){
 		month = "0"+month;
 	}
 	var date = d.getDate();
-	if(date < 10){
+	if(date < 10 && isPrefixNeeded){
 		date = "0"+date;
 	}
 	var formattedDate = month+"/"+date+"/"+year;
