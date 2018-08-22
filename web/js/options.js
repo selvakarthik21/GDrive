@@ -109,11 +109,11 @@ function createTaskOrEvent(){
 		if('Task' == iconType){
 			if(new Date(taskDate) == 'Invalid Date'){
 				$('#taskDate').css({'borderColor':'red'});
-				return;
+				return false;
 			}
 		} else if(new Date(selectedDate) == 'Invalid Date'){
 			$('#datetimepicker input').css({'borderColor':'red'});
-			return;
+			return false;
 		}
 		$('#datetimepicker input').css({'borderColor':'none'});
 		var sendRequest;

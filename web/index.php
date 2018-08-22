@@ -108,7 +108,6 @@
 					</button>
 					<h4 class="modal-title"></h4>
 				</div>
-				<form onsubmit="return createTaskOrEvent();">
 					<div class="modal-body">
 						<div class="form-group commentContent">
 							
@@ -130,9 +129,8 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="submit" id="icon-active-modal-submit-btn" class="btn btn-primary">Ok</button>
+						<button type="submit" id="icon-active-modal-submit-btn" class="btn btn-primary" onclick="createTaskOrEvent();">Ok</button>
 					</div>
-				</form>
 			</div>
 		</div>
 	</div>
