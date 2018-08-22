@@ -116,12 +116,12 @@
     						<h3 id="datePickerText">Due Date</h3>
     						<div class="form-group">
                                 <div class='input-group date' id='datetimepicker'>
-                                    <input type='text' class="form-control" />
+                                    <input type='text' class="form-control"  onkeydown="return false;" />
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
-                                <div class='input-group date' id='taskDate' style="display: none;">
+                                <div class='input-group date' id='taskDate' style="display: none;" onkeydown="return false;" >
                                     <input type='date' class="form-control" />
                                 </div>
                             </div>

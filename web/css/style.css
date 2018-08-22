@@ -54,7 +54,6 @@ td.reorder{
 }
 .dataTable > tbody > tr > td:last-child{
     padding-right: 0px !important;
-    float: right;
 }
 .dataTable th:last-child label {
 	clear: both;

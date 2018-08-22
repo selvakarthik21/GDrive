@@ -517,9 +517,13 @@ function listAllComments(file){
 }
 function makeTableSortable(){
 	try{
-		$('#datetimepicker').datetimepicker();
 		$('.table-inbox').DataTable().clear().draw();
 		$('.table-inbox').DataTable().destroy();
+	}catch(e){
+		console.log(e);
+	}
+	try{
+		$('#datetimepicker').datetimepicker();
 	}catch(e){
 		console.log(e);
 	}
