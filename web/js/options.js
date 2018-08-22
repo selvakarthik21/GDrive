@@ -161,17 +161,17 @@ function createTaskOrEvent(){
 					var date = new Date(response.due);
 					date = formateDateToMMDDYYYY(date, false);
 					messageRelatedActionDetails.taskId = response.id;
-					messageRelatedActionDetails.taskText = '<span style="color: #337ab7;"><b> Task : </b>'+(date)+'</span>';
+					messageRelatedActionDetails.taskText = '<span style="color: #337ab7;width: 25% !important; display: inline-block;"><b> Task : </b>'+(date)+'</span>';
 					messageRelatedActionDetails.taskDate = date;
 				}else if('Reminder' == iconType){
 					messageRelatedActionDetails.reminderId = response.id;
 					var date = new Date(response.start.dateTime);
-					messageRelatedActionDetails.reminderText = '<span style="color: #337ab7;"><b> Reminder : </b>'+(date.toLocaleString())+'</span>';
+					messageRelatedActionDetails.reminderText = '<span style="color: #337ab7;width: 40% !important; display: inline-block;"><b> Reminder : </b>'+(date.toLocaleString())+'</span>';
 					messageRelatedActionDetails.reminderDate = (date.toLocaleString());
 				}else if('Event' == iconType){
 					var date = new Date(response.start.dateTime);
 					messageRelatedActionDetails.eventId = response.id;
-					messageRelatedActionDetails.eventText = '<span style="color: #337ab7;"><b> Event : </b>'+(date.toLocaleString())+'</span>';
+					messageRelatedActionDetails.eventText = '<span style="color: #337ab7;width: 35% !important; display: inline-block;"><b> Event : </b>'+(date.toLocaleString())+'</span>';
 					messageRelatedActionDetails.eventDate = (date.toLocaleString());
 				}
 				messagesList[index] = messageRelatedActionDetails;
