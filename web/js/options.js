@@ -11,7 +11,7 @@ var loggedInUser;
 // included, separated by spaces.
 var SCOPES = 'https://www.googleapis.com/auth/drive \
 	profile \
-	email \';
+	email ';
 var messagesList = [];
 var authorizeButton = document.getElementById('authorize_button');
 var  signoutButton= document.getElementById('signout_button');
