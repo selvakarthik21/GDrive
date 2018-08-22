@@ -237,8 +237,8 @@ function appendPre(file, comment) {
 			<td><a target="_blank" href="'+url+'">'+file.name + '</a></td>\
 			<td>'+formatDate(comment.createdTime)+'</td>\
 			<td>\
-			<span class="commentText" >' + comment.content +'</span><br/>'+contentSuffixText
-			'</td>\
+			<span class="commentText" >' + comment.content +'</span><br/>'+contentSuffixText+'\
+			</td>\
 			<td>\
 			<i class="icons fa fa-edit taskIcon googleIcons '+eventActive+'" title="Google Task" data-icon="Task" data-id="'+taskId+'"></i>\
 			<i class="icons fa fa-lightbulb keepIcon googleIcons '+eventActive+'" title="Google Keep" data-icon="Notes" data-id="'+keepId+'"></i>\
