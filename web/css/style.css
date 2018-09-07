@@ -79,43 +79,43 @@ i.keepIcon.active {
     display: inline-block;
 }
 .icons.taskIcon {
-    background: url(img/task.png) no-repeat;
+    background: url(../img/task.png) no-repeat;
 }
 
 .icons.keepIcon {
-    background: url(img/keep.png) no-repeat;
+    background: url(../img/keep.png) no-repeat;
 }
 .icons.reminderIcon {
-    background: url(img/reminder.png) no-repeat;
+    background: url(../img/reminder.png) no-repeat;
 }
 
 .icons.calendarIcon {
-    background: url(img/calendar.png) no-repeat;
+    background: url(../img/calendar.png) no-repeat;
 }
 
 .icons.taskIcon.active {
-    background: url(img/task-active.png) no-repeat;
+    background: url(../img/task-active.png) no-repeat;
 }
 
 .icons.keepIcon.active {
-    background: url(img/keep-active.png) no-repeat;
+    background: url(../img/keep-active.png) no-repeat;
 }
 .icons.reminderIcon.active {
-    background: url(img/reminder-active.png) no-repeat;
+    background: url(../img/reminder-active.png) no-repeat;
 }
 
 .icons.calendarIcon.active {
-    background: url(img/calendar-active.png) no-repeat;
+    background: url(../img/calendar-active.png) no-repeat;
 }
 
 .icons.replyIcon{
-	background: url(img/reply.png) no-repeat;
+	background: url(../img/reply.png) no-repeat;
 }
 
 .icons.deleteIcon{
-	background: url(img/delete.png) no-repeat;
+	background: url(../img/delete.png) no-repeat;
 }
 
 .icons.resolvedIcon{
-	background: url(img/resolved.png) no-repeat;
+	background: url(../img/resolved.png) no-repeat;
 }
