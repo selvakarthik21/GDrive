@@ -71,51 +71,71 @@ i.active.taskIcon, i.active.reminderIcon, i.active.calendarIcon {
 i.keepIcon.active {
     color: #d4cf09d9;
 }
-.icons.googleIcons{
-	width: 30px;
-    height: 30px;
-    background-repeat: no-repeat;
-    background-size: auto 100%;
+.icons{
+	width: 20px;
+    height: 20px;
     display: inline-block;
 }
 .icons.taskIcon {
     background: url(../img/task.png) no-repeat;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
 }
 
 .icons.keepIcon {
     background: url(../img/keep.png) no-repeat;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
 }
 .icons.reminderIcon {
     background: url(../img/reminder.png) no-repeat;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
 }
 
 .icons.calendarIcon {
     background: url(../img/calendar.png) no-repeat;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
 }
 
 .icons.taskIcon.active {
     background: url(../img/task-active.png) no-repeat;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
 }
 
 .icons.keepIcon.active {
     background: url(../img/keep-active.png) no-repeat;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
 }
 .icons.reminderIcon.active {
     background: url(../img/reminder-active.png) no-repeat;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
 }
 
 .icons.calendarIcon.active {
     background: url(../img/calendar-active.png) no-repeat;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
 }
 
 .icons.replyIcon{
 	background: url(../img/reply.png) no-repeat;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
 }
 
 .icons.deleteIcon{
 	background: url(../img/delete.png) no-repeat;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
 }
 
 .icons.resolvedIcon{
 	background: url(../img/resolved.png) no-repeat;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
 }
