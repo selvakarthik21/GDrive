@@ -38,7 +38,7 @@ td.reorder{
 .logo{
 	background: url(../img/logo.png) no-repeat;
     width: 100%;
-    height: 60px;
+    height: 75px;
     background-repeat: no-repeat;
     background-size: auto 100%;
 }
@@ -60,9 +60,8 @@ td.reorder{
     float: right;
     width: 234px !important;
 }
-i.icons {
+.icons {
     margin-right: 14px;
-    font-size: 16px;
     cursor: pointer;
     margin-top: 10px;
 }
@@ -71,4 +70,52 @@ i.active.taskIcon, i.active.reminderIcon, i.active.calendarIcon {
 }
 i.keepIcon.active {
     color: #d4cf09d9;
+}
+.icons.googleIcons{
+	width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    display: inline-block;
+}
+.icons.taskIcon {
+    background: url(img/task.png) no-repeat;
+}
+
+.icons.keepIcon {
+    background: url(img/keep.png) no-repeat;
+}
+.icons.reminderIcon {
+    background: url(img/reminder.png) no-repeat;
+}
+
+.icons.calendarIcon {
+    background: url(img/calendar.png) no-repeat;
+}
+
+.icons.taskIcon.active {
+    background: url(img/task-active.png) no-repeat;
+}
+
+.icons.keepIcon.active {
+    background: url(img/keep-active.png) no-repeat;
+}
+.icons.reminderIcon.active {
+    background: url(img/reminder-active.png) no-repeat;
+}
+
+.icons.calendarIcon.active {
+    background: url(img/calendar-active.png) no-repeat;
+}
+
+.icons.replyIcon{
+	background: url(img/reply.png) no-repeat;
+}
+
+.icons.deleteIcon{
+	background: url(img/delete.png) no-repeat;
+}
+
+.icons.resolvedIcon{
+	background: url(img/resolved.png) no-repeat;
 }
