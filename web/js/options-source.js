@@ -20,10 +20,10 @@ var tzoffset = (new Date()).getTimezoneOffset() * 60000;
 $(document).on('click', '.googleIcons', function(){
 	var isActive = $(this).hasClass('active');
 	var iconType = $(this).attr('data-icon');
-	var title = $(this).attr('title');
 	if ("Notes" == iconType){
 		return;
 	}
+	var title = $(this).attr('title');
 	$('#icon-active-modal .modal-title').text(title);
 	var prefixText = $(this).attr('data-icon');
 	var commentId = $(this).closest('tr').attr('id');
@@ -186,7 +186,11 @@ function createTaskOrEvent(){
 					messageRelatedActionDetails.eventDate = (date.toLocaleString());
 				}
 				messagesList[index] = messageRelatedActionDetails;
-				                
+				
+				updateMessageOrder(messagesList);                
+				var $tdComment = $("#row-" + commentId).find(".commentText").parent();
+				$tdComment.find("span:not(.commentText)").remove();
+				
 				var eventText = messageRelatedActionDetails.eventText || "";
 				var reminderText = messageRelatedActionDetails.reminderText || "";
 				var keepText = messageRelatedActionDetails.keepText || "";
@@ -194,8 +198,6 @@ function createTaskOrEvent(){
 								
 				var contentSuffixText = eventText+reminderText+keepText+taskText;
 				
-				var $tdComment = $("#row-" + commentId).find(".commentText").parent();
-				$tdComment.find("span:not(.commentText)").remove();
 				$tdComment.append(contentSuffixText);
 				
 				var eventId = messageRelatedActionDetails.eventId || "";
@@ -207,13 +209,16 @@ function createTaskOrEvent(){
 				reminderActive =  ($.trim(reminderId) == "") ? "" : " active ", 
 				keepActive =  ($.trim(keepId) == "") ? "" : " active ", 
 				taskActive =  ($.trim(taskId) == "") ? "" : " active ";
-				var taskDate = messageRelatedActionDetails.taskDate || ""
+				
+				var taskDate = messageRelatedActionDetails.taskDate || "";
+				var keepDate = messageRelatedActionDetails.keepDate || ""
 				var reminderDate = messageRelatedActionDetails.reminderDate || "";
 				var eventDate = messageRelatedActionDetails.eventDate || "";
 				
-				$("#row-" + commentId + " .taskIcon").addClass(variable_0f).attr("data-task-date", taskDate), 
-				$("#row-" + commentId + " .reminderIcon").addClass(variable_0d).attr("data-reminder-date", reminderDate), 
-				$("#row-" + commentId + " .calendarIcon").addClass(variable_0c).attr("data-event-date", eventDate);
+				$("#row-" + commentId + " .taskIcon").addClass(taskActive).attr("data-task-date", taskDate), 
+				$("#row-" + commentId + " .keepIcon").addClass(keepActive).attr("data-keep-date", keepDate), 
+				$("#row-" + commentId + " .reminderIcon").addClass(reminderActive).attr("data-reminder-date", reminderDate), 
+				$("#row-" + commentId + " .calendarIcon").addClass(eventActive).attr("data-event-date", eventDate);
 			}
 			setTimeout(function(){
 				$("#icon-active-modal").modal('hide');
@@ -704,11 +709,16 @@ function loadAllComments(file, comments){
 			var comment = comments[i];
 			var content = comment.content;              
 			if(!comment.resolved && content.indexOf(loggedInUser) > -1){
-				//content = content.replace(loggedInUser,'+karthik21');
+				content = content.replace(loggedInUser,'');
 				comment.content = content;
 				appendPre(file, comment);
 			}             
 		}
+		if(0 == messagesList.length){
+			setTimeout(function() {		
+				$(".table-inbox thead tr th:eq(1)")["click"]()		
+			}, 2000);
+		}			
 	}
 }
 function sleep(milliseconds) {
