@@ -16,6 +16,7 @@ var  signoutButton= document.getElementById('signout_button');
 var signoutButtonHtml = '<button id="signout_button" class="btn btn-sm btn-danger" style="margin-left:10px;">Sign Out</button>';
 var firstTimeLoad = true;
 var tzoffset = (new Date()).getTimezoneOffset() * 60000;
+var maxIndex = 999999999999;
 
 $(document).on('click', '.googleIcons', function(){
 	var isActive = $(this).hasClass('active');
@@ -167,6 +168,9 @@ function createTaskOrEvent(){
 			if(response.id){
 				var commentId = $('#icon-active-modal-submit-btn').attr('data-commentId');
 				var index = getMessageIndex(commentId);
+				if(index == maxIndex){
+					index = $('.dataTable tbody tr').index($('#row-'+commentId))
+				}
 				var messageRelatedActionDetails = messagesList[index];
 				if('Task' == iconType){
 					var date = new Date(response.due);
@@ -319,7 +323,7 @@ function appendPre(file, comment) {
 			</td>\
 			<td>\
 			<div class="icons taskIcon googleIcons '+taskActive+'" title="Google Task" data-icon="Task" data-id="'+taskId+'" data-task-date="'+taskDate+'"></div>\
-			<div class="icons keepIcon googleIcons '+keepActive+'" title="Google Keep" data-icon="Notes" data-id="'+keepId+'" style="display:none;"></div>\
+			<div class="icons keepIcon googleIcons '+keepActive+'" title="Google Keep" data-icon="Notes" data-id="'+keepId+'"></div>\
 			<div class="icons reminderIcon googleIcons '+reminderActive+'" title="Google Reminder" data-icon="Reminder" data-id="'+reminderId+'" data-reminder-date="'+reminderDate+'"></div>\
 			<div class="icons calendarIcon googleIcons '+eventActive+'" title="Google Calendar" data-icon="Event" data-id="'+eventId+'" data-event-date="'+eventDate+'"></div>\
 			<div class="icons replyIcon" data-dismiss="modal" data-toggle="modal" data-target="#reply-modal" \
@@ -662,7 +666,7 @@ function getMessageIndex(messageId){
 			break;
 		}
 	}
-	var idx = (index > -1)  ? index : 999999999999;	
+	var idx = (index > -1)  ? index : maxIndex;	
 	return idx;
 }
 function formateDateToHTML5Date(d){
