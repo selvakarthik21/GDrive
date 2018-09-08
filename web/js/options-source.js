@@ -655,9 +655,7 @@ function makeTableSortable(){
 	    }
 	});
 }
-function updateMessageOrder(messageOrder){
-	messagesList = messageOrder;
-}
+
 function getMessageIndex(messageId){
 	var index = -1;
 	for(var i = 0; i < messagesList.length; i++){
@@ -732,4 +730,10 @@ function sleep(milliseconds) {
 			break;
 		}
 	}
+}
+
+
+
+function updateMessageOrder(messageOrder){
+	messagesList = messageOrder;
 }
