@@ -65,7 +65,7 @@ $(document).on('click', '.googleIcons', function(){
 
     	var messageOrder = [];
 		$('.table-inbox tbody tr').each(function(){
-			var replyBtnId = $(this).attr('id');
+			var replyBtnId = $(this).attr('id') || "";
 			replyBtnId = replyBtnId.replace(/row-/gi,'');
 			var obj = {
 					id : replyBtnId
@@ -638,7 +638,7 @@ function makeTableSortable(){
 	table.on( 'row-reorder', function ( e, diff, edit ) {
 		var messageOrder = [];
 		$('.table-inbox tbody tr').each(function(){
-			var replyBtnId = $(this).attr('id');
+			var replyBtnId = $(this).attr('id') || "";
 			replyBtnId = replyBtnId.replace(/row-/gi,'');
 			var obj = {
 					id : replyBtnId
@@ -661,7 +661,7 @@ function makeTableSortable(){
 	    if(col_idx == 1 || col_idx == 2){
 	    	var messageOrder = [];
 			$('.table-inbox tbody tr').each(function(){
-				var replyBtnId = $(this).attr('id');
+				var replyBtnId = $(this).attr('id') || "";
 				replyBtnId = replyBtnId.replace(/row-/gi,'');
 				var obj = {
 						id : replyBtnId
