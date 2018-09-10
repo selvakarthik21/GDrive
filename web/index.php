@@ -15,7 +15,7 @@
 	<div class="container">
 		<div style="display: -webkit-box;">
 			<div class="logo"></div>
-			<div class="settings"><i class="fa fa-cog settingsIcon"></i></div>		
+			<div class="settings"><i class="fa fa-cog settingsIcon" onclick="javascript:$('#settings-modal').modal('show') return false;"></i></div>		
 		</div>	
 		<div class="title">Action Items Manager</div>
 
