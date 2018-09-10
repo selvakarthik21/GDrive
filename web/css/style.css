@@ -37,10 +37,19 @@ td.reorder{
 }
 .logo{
 	background: url(../img/logo.png) no-repeat;
-    width: 100%;
+    width: 90%;
     height: 75px;
     background-repeat: no-repeat;
     background-size: auto 100%;
+}
+.settings{
+    width: 10%;
+    height: 75px;
+}
+.settingsIcon{
+	float: right;
+	font-size: 25px;
+    margin-top: 20px;
 }
 .no-footer{
 	margin-top: 17px;
@@ -138,4 +147,9 @@ i.keepIcon.active {
 	background: url(../img/resolved.png) no-repeat;
     background-repeat: no-repeat;
     background-size: auto 100%;
+}
+.pendingItemIcons {
+    width: 30px !important;
+    height: 30px !important;
+    margin-right: 0px !important;
 }

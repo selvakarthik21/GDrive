@@ -62,27 +62,25 @@ $(document).on('click', '.googleIcons', function(){
 		if('Task' == iconType || 'Event' == iconType || 'Reminder' == iconType){
 			$('#icon-active-modal-submit-btn').text("Create "+iconType);	
 		}
-		if(0 == messagesList.length){
-			var messageOrder = [];
-			$('.table-inbox tbody tr').each(function(){
-				var replyBtnId = $(this).attr('id');
-				replyBtnId = replyBtnId.replace(/row-/gi,'');
-				var obj = {
-						id : replyBtnId
+
+    	var messageOrder = [];
+		$('.table-inbox tbody tr').each(function(){
+			var replyBtnId = $(this).attr('id');
+			replyBtnId = replyBtnId.replace(/row-/gi,'');
+			var obj = {
+					id : replyBtnId
+			}
+			if(0 < messagesList.length){
+				var filteredObj = $.grep(messagesList, function(element, index){
+					return element.id == replyBtnId;
+				});
+				if(filteredObj[0]){ 
+					obj = filteredObj[0];				
 				}
-				if(0 < messagesList.length){
-					var filteredObj = $.grep(messagesList, function(element, index){
-						return element.id == replyBtnId;
-					});
-					if(filteredObj[0]){ 
-						obj = filteredObj[0];				
-					}
-				}
-				messageOrder.push(obj);
-			});
-			updateMessageOrder(messageOrder);
-		}
-		
+			}
+			messageOrder.push(obj);
+		});
+		updateMessageOrder(messageOrder);		
 	}
 	$('#icon-active-modal').modal('show');
 })
@@ -90,7 +88,9 @@ $(document).on('click', '.googleIcons', function(){
  *  On load, called to load the auth2 library and API client library.
  */
 function handleClientLoad() {
-	gapi.load('client:auth2', initClient);
+	setTimeout(function(){
+		gapi.load('client:auth2', initClient);
+	}, 1000);	
 }
 
 /**
@@ -223,6 +223,14 @@ function createTaskOrEvent(){
 				$("#row-" + commentId + " .keepIcon").addClass(keepActive).attr("data-keep-date", keepDate), 
 				$("#row-" + commentId + " .reminderIcon").addClass(reminderActive).attr("data-reminder-date", reminderDate), 
 				$("#row-" + commentId + " .calendarIcon").addClass(eventActive).attr("data-event-date", eventDate);
+				
+				var contentIconClass ="";
+				if(taskActive == " active "){
+					contentIconClass = 'icons taskIcon pendingItemIcons'+taskActive;
+				} else if(eventActive == " active "){
+					contentIconClass = 'icons calendarIcon pendingItemIcons'+taskActive;
+				}
+				$("#row-" + commentId + " td:eq(0) div").addClass(contentIconClass);
 			}
 			setTimeout(function(){
 				$("#icon-active-modal").modal('hide');
@@ -314,17 +322,33 @@ function appendPre(file, comment) {
 	var taskDate = messageRelatedActionDetails.taskDate || ""
 	var reminderDate = messageRelatedActionDetails.reminderDate || "";
 	var eventDate = messageRelatedActionDetails.eventDate || "";
+	
+	var contentIconClass ="";
+	if(taskActive == " active "){
+		contentIconClass = 'icons taskIcon pendingItemIcons'+taskActive;
+	} else if(eventActive == " active "){
+		contentIconClass = 'icons calendarIcon pendingItemIcons'+taskActive;
+	}
 	var newRow = '<tr id="row-'+comment.id+'">\
 			<td>'+index+'</td>\
-			<td><a target="_blank" href="'+url+'">'+file.name + '</a></td>\
+			<td>\
+				<table width="100%" align="center" border="0" style="background-color: rgba(0,0,0,0) !important;">\
+					<tbody style="background-color: rgba(0,0,0,0) !important;">\
+						<tr style="background-color: rgba(0,0,0,0) !important;">\
+							<td valign="middle" style="background-color: rgba(0,0,0,0) !important;vertical-align: middle !important;padding:0;text-align:left;padding-bottom: 5px !important;"><div class="'+contentIconClass+'"></div>\
+							<td style="background-color: rgba(0,0,0,0) !important;"><a class="pull-right" target="_blank" href="'+url+'">'+file.name + '</a></td>\
+						</tr>\
+					</tbody>\
+				</table>\
+			</td>\
 			<td>'+new Date(comment.createdTime).toLocaleString()+'</td>\
 			<td>\
 			<span class="commentText" >' + comment.content +'</span><br/>'+contentSuffixText+'\
 			</td>\
-			<td>\
+			<td align="right">\
 			<div class="icons taskIcon googleIcons '+taskActive+'" title="Google Task" data-icon="Task" data-id="'+taskId+'" data-task-date="'+taskDate+'"></div>\
-			<div class="icons keepIcon googleIcons '+keepActive+'" title="Google Keep" data-icon="Notes" data-id="'+keepId+'"></div>\
-			<div class="icons reminderIcon googleIcons '+reminderActive+'" title="Google Reminder" data-icon="Reminder" data-id="'+reminderId+'" data-reminder-date="'+reminderDate+'"></div>\
+			<div class="icons keepIcon googleIcons '+keepActive+'" title="Google Keep" data-icon="Notes" data-id="'+keepId+'" style="display:none;"></div>\
+			<div class="icons reminderIcon googleIcons '+reminderActive+'" title="Google Reminder" data-icon="Reminder" data-id="'+reminderId+'" data-reminder-date="'+reminderDate+'" style="display:none;"></div>\
 			<div class="icons calendarIcon googleIcons '+eventActive+'" title="Google Calendar" data-icon="Event" data-id="'+eventId+'" data-event-date="'+eventDate+'"></div>\
 			<div class="icons replyIcon" data-dismiss="modal" data-toggle="modal" data-target="#reply-modal" \
 					id="'+comment.id+'" onclick="fillInReply(\''+file.name+'\',\''+ escape(comment.content) +'\',this.id,\''+file.id+'\')">\
@@ -736,4 +760,20 @@ function sleep(milliseconds) {
 
 function updateMessageOrder(messageOrder){
 	messagesList = messageOrder;
+}
+
+function saveSettings(){
+	var timeInterval = $('#timeInterval').val();
+	if(!isNaN(timeInterval)){
+		daysDiff = timeInterval * 24 * 3600 * 1000;
+		var currentDate = new Date();
+    	currentDate = formateDateToHTML5Date(currentDate);
+    	var d = new Date();
+    	d = new Date( d- daysDiff );
+    	var formattedDate = formateDateToHTML5Date(d);
+    	$('#date').val(formattedDate);
+    	setTimeout(listFiles, 100);		
+	}
+	$('#settings-modal').modal('hide');
+	return false;
 }

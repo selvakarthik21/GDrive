@@ -13,7 +13,10 @@
 </head>
 <body>
 	<div class="container">
-		<div class="logo"></div>		
+		<div style="display: block;">
+			<div class="logo"></div>
+			<div class="settings"></div>		
+		</div>	
 		<div class="title">Action Items Manager</div>
 
 		<button id="authorize_button" class="btn btn-primary hidden" style="margin-top: 50px;">Authorize</button>
@@ -134,7 +137,36 @@
 			</div>
 		</div>
 	</div>
-	
+	<div class="modal fade" id="settings-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Settings</h4>
+				</div>
+				<form onsubmit="return saveSettings();">
+					<div class="modal-body">
+						<div class="form-group">
+						Search for Action Items older than  : 
+							<select id="timeInterval">
+								<option value="90" selected="selected">3 Months</option>
+								<option value="30">1 Month</option>
+								<option value="30">1 Week</option>
+								<option value="1">1 Day</option>
+							</select>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Save</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 	<script src="js/jquery-2.2.4.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery.dataTables.min.js"></script>
