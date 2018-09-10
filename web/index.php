@@ -154,7 +154,7 @@
 							<select id="timeInterval">
 								<option value="90" selected="selected">3 Months</option>
 								<option value="30">1 Month</option>
-								<option value="30">1 Week</option>
+								<option value="7">1 Week</option>
 								<option value="1">1 Day</option>
 							</select>
 						</div>
