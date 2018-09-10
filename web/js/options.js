@@ -336,12 +336,12 @@ function appendPre(file, comment) {
 					<tbody style="background-color: rgba(0,0,0,0) !important;">\
 						<tr style="background-color: rgba(0,0,0,0) !important;">\
 							<td valign="middle" style="background-color: rgba(0,0,0,0) !important;vertical-align: middle !important;padding:0;text-align:left;padding-bottom: 5px !important;"><div class="'+contentIconClass+'"></div>\
-							<td style="background-color: rgba(0,0,0,0) !important;"><a class="pull-right" target="_blank" href="'+url+'">'+file.name + '</a></td>\
+							<td style="background-color: rgba(0,0,0,0) !important;" align="right"><a class="pull-right" target="_blank" href="'+url+'">'+file.name + '</a></td>\
 						</tr>\
 					</tbody>\
 				</table>\
 			</td>\
-			<td>'+new Date(comment.createdTime).toLocaleString()+'</td>\
+			<td class="createdDateTime">'+new Date(comment.createdTime).toLocaleString()+'</td>\
 			<td>\
 			<span class="commentText" >' + comment.content +'</span><br/>'+contentSuffixText+'\
 			</td>\

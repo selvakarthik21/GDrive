@@ -154,3 +154,6 @@ i.keepIcon.active {
     height: 30px !important;
     margin-right: 0px !important;
 }
+.createdDateTime{
+	color: #337ab7;	
+}
