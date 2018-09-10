@@ -45,6 +45,7 @@ td.reorder{
 .settings{
     width: 10%;
     height: 75px;
+    display: inline;
 }
 .settingsIcon{
 	float: right;
