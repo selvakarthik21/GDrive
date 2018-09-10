@@ -37,15 +37,13 @@ td.reorder{
 }
 .logo{
 	background: url(../img/logo.png) no-repeat;
-    width: 90%;
+    width: 98%;
     height: 75px;
     background-repeat: no-repeat;
     background-size: auto 100%;
 }
 .settings{
-    width: 10%;
-    height: 75px;
-    display: inline;
+    
 }
 .settingsIcon{
 	float: right;
