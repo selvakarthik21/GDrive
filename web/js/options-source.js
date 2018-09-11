@@ -310,7 +310,7 @@ function appendPre(file, comment) {
 	var taskText = messageRelatedActionDetails.taskText || "";
 	
 	var contentSuffixText = eventText+reminderText+keepText+taskText;
-	
+	contentSuffixText = contentSuffixText.replace(/#337ab7/gi, 'rgb(0,176,240)' );
 	var eventId = messageRelatedActionDetails.eventId || "";
 	var reminderId = messageRelatedActionDetails.reminderId || "";
 	var keepId = messageRelatedActionDetails.keepId || "";
