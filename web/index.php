@@ -17,21 +17,21 @@
 			<div class="logo"></div>
 			<div class="settings"><i class="fa fa-cog settingsIcon" onclick="javascript:$('#settings-modal').modal('show'); return false;"></i></div>		
 		</div>	
-		<div class="title">Action Items Manager</div>
+		<!-- <div class="title">Action Items Manager</div> -->
 
 		<button id="authorize_button" class="btn btn-primary hidden" style="margin-top: 50px;">Authorize</button>
 		
-		<table class="table table-striped table-inbox hidden dataTable">
+		<table class="table table-inbox hidden dataTable">
 			<thead>
 				<tr>
-					<th style="width: 0%;"></th>
-					<th style="width: 10%;">Name</th>
-					<th style="width: 10%;">Created On</th>
-					<th style="width: 59%">Action Item</th>
+					<th style="width: 0%;text-align: right;"></th>
+					<th style="width: 10%;text-align: right;">Name</th>
+					<th style="width: 13% !important;">Created On</th>
+					<th style="width: 58%">Action Item</th>
 					<th></th>
 				</tr>
 			</thead>
-			<tbody></tbody>
+			<tbody class="shadow"></tbody>
 		</table>
 		<div class="overlay">
 		    <div id="loading-img"></div>

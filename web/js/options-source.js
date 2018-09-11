@@ -13,7 +13,7 @@ var SCOPES = 'https://www.googleapis.com/auth/drive profile email https://www.go
 var messagesList = [];
 var authorizeButton = document.getElementById('authorize_button');
 var  signoutButton= document.getElementById('signout_button');
-var signoutButtonHtml = '<button id="signout_button" class="btn btn-sm btn-danger" style="margin-left:10px;">Sign Out</button>';
+var signoutButtonHtml = '<button id="signout_button" class="btn btn-sm btn-primary" style="margin-left:10px;">Sign Out</button>';
 var firstTimeLoad = true;
 var tzoffset = (new Date()).getTimezoneOffset() * 60000;
 var maxIndex = 999999999999;
@@ -176,17 +176,17 @@ function createTaskOrEvent(){
 					var date = new Date(response.due);
 					date = formateDateToMMDDYYYY(date, false);
 					messageRelatedActionDetails.taskId = response.id;
-					messageRelatedActionDetails.taskText = '<span style="color: #337ab7;width: 25% !important; display: inline-block;"><b> Task : </b>'+(date)+'</span>';
+					messageRelatedActionDetails.taskText = '<span style="color: #rgb(0,176,240);width: 25% !important; display: inline-block;"><b> Task : </b>'+(date)+'</span>';
 					messageRelatedActionDetails.taskDate = date;
 				}else if('Reminder' == iconType){
 					messageRelatedActionDetails.reminderId = response.id;
 					var date = new Date(response.start.dateTime);
-					messageRelatedActionDetails.reminderText = '<span style="color: #337ab7;width: 40% !important; display: inline-block;"><b> Reminder : </b>'+(date.toLocaleString())+'</span>';
+					messageRelatedActionDetails.reminderText = '<span style="color: rgb(0,176,240);width: 40% !important; display: inline-block;"><b> Reminder : </b>'+(date.toLocaleString())+'</span>';
 					messageRelatedActionDetails.reminderDate = (date.toLocaleString());
 				}else if('Event' == iconType){
 					var date = new Date(response.start.dateTime);
 					messageRelatedActionDetails.eventId = response.id;
-					messageRelatedActionDetails.eventText = '<span style="color: #337ab7;width: 35% !important; display: inline-block;"><b> Event : </b>'+(date.toLocaleString())+'</span>';
+					messageRelatedActionDetails.eventText = '<span style="color: rgb(0,176,240);width: 35% !important; display: inline-block;"><b> Event : </b>'+(date.toLocaleString())+'</span>';
 					messageRelatedActionDetails.eventDate = (date.toLocaleString());
 				}
 				messagesList[index] = messageRelatedActionDetails;
@@ -608,6 +608,7 @@ function makeTableSortable(){
             { orderable: true, className: 'reorder', targets: 2 },
             { orderable: false, targets: '_all' }
         ],
+        
         "fnInitComplete": function( settings ) {
         	var currentDate = new Date();
         	currentDate = formateDateToHTML5Date(currentDate);
@@ -619,7 +620,9 @@ function makeTableSortable(){
 				<input type="date" placeholder="mm/dd/yyyy" id="date" max="'+currentDate+'" onkeydown="return false;" value="'+formattedDate+'">\
 			</label>';
         	if($('#date').length == 0){
-        		$('.dataTables_filter').append('<button id="refreshItem" onclick="listFiles();" class="btn btn-primary btn-sm" style="margin-left: 7px;">Refresh</button>');
+        		$('.dataTables_filter label')[0].childNodes[0].data="";
+        		$('.dataTables_filter label input').attr('placeholder','Search');
+        		$('.dataTables_filter').append('<button id="refreshItem" onclick="listFiles();" class="btn btn-info btn-sm" style="margin-left: 7px;">Refresh</button>');
         		$('.dataTable thead tr th:last').append(label);
         		$(signoutButtonHtml).appendTo($('.dataTables_filter'));
         		setTimeout(function(){
