@@ -235,3 +235,9 @@ tbody.shadow {
 th, th label {
     font-weight: 500 !important;
 }
+th.sorting_disabled {
+    pointer-events: none;
+}
+th.sorting_disabled input{
+    pointer-events: all;
+}
