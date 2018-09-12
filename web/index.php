@@ -27,7 +27,7 @@
 					<th style="width: 0%;"></th>
 					<th style="width: 10%;text-align: right;">Name</th>
 					<th style="width: 12% !important;text-align: right;">Created On</th>
-					<th style="width: 58%">Action Item</th>
+					<th style="width: 57%">Action Item</th>
 					<th></th>
 				</tr>
 			</thead>

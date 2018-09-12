@@ -176,7 +176,7 @@ function createTaskOrEvent(){
 					var date = new Date(response.due);
 					date = formateDateToMMDDYYYY(date, false);
 					messageRelatedActionDetails.taskId = response.id;
-					messageRelatedActionDetails.taskText = '<span style="color: #rgb(0,176,240);width: 25% !important; display: inline-block;"><b> Task : </b>'+(date)+'</span>';
+					messageRelatedActionDetails.taskText = '<span style="color: rgb(0,176,240);width: 25% !important; display: inline-block;"><b> Task : </b>'+(date)+'</span>';
 					messageRelatedActionDetails.taskDate = date;
 				}else if('Reminder' == iconType){
 					messageRelatedActionDetails.reminderId = response.id;
@@ -311,6 +311,7 @@ function appendPre(file, comment) {
 	
 	var contentSuffixText = eventText+reminderText+keepText+taskText;
 	contentSuffixText = contentSuffixText.replace(/#337ab7/gi, 'rgb(0,176,240)' );
+	contentSuffixText = contentSuffixText.replace(/#rgb\(0,176,240\)/gi, 'rgb(0,176,240)' );
 	var eventId = messageRelatedActionDetails.eventId || "";
 	var reminderId = messageRelatedActionDetails.reminderId || "";
 	var keepId = messageRelatedActionDetails.keepId || "";
@@ -336,8 +337,8 @@ function appendPre(file, comment) {
 				<table width="100%" align="center" border="0" style="background-color: rgba(0,0,0,0) !important;">\
 					<tbody style="background-color: rgba(0,0,0,0) !important;">\
 						<tr style="background-color: rgba(0,0,0,0) !important;">\
-							<td valign="middle" style="background-color: rgba(0,0,0,0) !important;vertical-align: middle !important;padding:0;text-align:left;padding-bottom: 5px !important;"><div class="'+contentIconClass+'"></div>\
-							<td style="background-color: rgba(0,0,0,0) !important;" align="right"><a class="pull-right" target="_blank" href="'+url+'">'+file.name + '</a></td>\
+							<td valign="middle" style="background-color: rgba(0,0,0,0) !important;vertical-align: middle !important;padding:0;text-align:left;padding-bottom: 5px !important;"><div style="margin-top: 0px !important;" class="'+contentIconClass+'"></div>\
+							<td style="background-color: rgba(0,0,0,0) !important; padding-top: 0px !important;" align="right"><a class="pull-right" target="_blank" href="'+url+'">'+file.name + '</a></td>\
 						</tr>\
 					</tbody>\
 				</table>\
