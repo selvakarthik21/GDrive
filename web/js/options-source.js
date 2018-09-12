@@ -228,7 +228,7 @@ function createTaskOrEvent(){
 				if(taskActive == " active "){
 					contentIconClass = 'icons taskIcon pendingItemIcons'+taskActive;
 				} else if(eventActive == " active "){
-					contentIconClass = 'icons calendarIcon pendingItemIcons'+taskActive;
+					contentIconClass = 'icons calendarIcon pendingItemIcons'+eventActive;
 				}
 				$("#row-" + commentId + " td:eq(0) div").addClass(contentIconClass);
 			}
@@ -329,7 +329,7 @@ function appendPre(file, comment) {
 	if(taskActive == " active "){
 		contentIconClass = 'icons taskIcon pendingItemIcons'+taskActive;
 	} else if(eventActive == " active "){
-		contentIconClass = 'icons calendarIcon pendingItemIcons'+taskActive;
+		contentIconClass = 'icons calendarIcon pendingItemIcons'+eventActive;
 	}
 	var newRow = '<tr id="row-'+comment.id+'">\
 			<td>'+index+'</td>\
@@ -603,6 +603,7 @@ function makeTableSortable(){
 		"iDisplayLength": "All",
 		"order": [[ 0, "asc" ]],
 		"bInfo" : false,
+		"orderClasses": false,
         "columnDefs": [
             { targets: 0, visible: false },
             { orderable: true, className: 'reorder', targets: 1 },
